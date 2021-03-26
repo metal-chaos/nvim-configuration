@@ -13,3 +13,7 @@ repo  = 'cespare/vim-toml'
 # Golang
 [[plugins]]
 repo = 'fatih/vim-go'
+
+# Show file tree
+[[plugins]]
+repo = 'scrooloose/nerdtree'
