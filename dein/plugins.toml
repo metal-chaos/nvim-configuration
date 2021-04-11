@@ -17,3 +17,7 @@ repo = 'fatih/vim-go'
 # Show file tree
 [[plugins]]
 repo = 'scrooloose/nerdtree'
+
+# Git
+[[plugins]]
+repo = 'tpope/vim-fugitive'
