@@ -1,0 +1,1 @@
+/Users/yutaaoki/.config/nvim/dein/repos/github.com/jacoborus/tender.vim/autoload/lightline/colorscheme/tender.vim

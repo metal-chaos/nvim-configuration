@@ -1,0 +1,1 @@
+/Users/yutaaoki/.config/nvim/dein/repos/github.com/norcalli/nvim-colorizer.lua/plugin/colorizer.vim
