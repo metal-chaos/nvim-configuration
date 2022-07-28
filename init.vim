@@ -38,6 +38,8 @@ endif
 
 "End dein Scripts-------------------------
 
+let mapleader = "m"
+
 " バックアップファイルを作らない
 set nobackup
 
@@ -82,3 +84,11 @@ inoremap <Esc> <Esc>lh
 
 " ヤンクするとクリップボードに保存される
 set clipboard+=unnamed
+
+" Telescope
+nnoremap <leader>p <cmd>Telescope find_files hidden=true theme=get_dropdown<cr>
+nnoremap <leader>gr <cmd>Telescope live_grep theme=get_dropdown<cr>
+nnoremap <leader>b <cmd>Telescope buffers theme=get_dropdown<cr>
+nnoremap <leader>h <cmd>Telescope oldfiles theme=get_dropdown<cr>
+nnoremap <leader>gb <cmd>Telescope git_branches theme=get_dropdown<cr>"
+nnoremap <leader>f <cmd>Fern . -reveal=% -drawer<cr>"

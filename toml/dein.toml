@@ -10,7 +10,7 @@ repo = 'preservim/nerdtree'
 [[plugins]]
 repo = 'skanehira/jumpcursor.vim'
 hook_add = '''
-  nmap <silent> [j <Plug>(jumpcursor-jump)
+  nmap <silent> ;j <Plug>(jumpcursor-jump)
 '''
 
 [[plugins]]
@@ -21,3 +21,15 @@ augroup SetColorScheme
 	au VimEnter * nested colorscheme molokai
 augroup END
 	'''
+
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
