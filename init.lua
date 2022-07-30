@@ -6,6 +6,7 @@ vim.g.mapleader = ";"
 -- Basic configuration
 o.number = true
 vim.opt.clipboard:append{'unnamedplus'}
+vim.opt.termguicolors = true
 
 -- Indent visible
 o.list = true
@@ -46,6 +47,11 @@ vim.keymap.set('n', '<Leader>f', '<cmd>Fern . -reveal=% -drawer<CR>')
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
 
+--- packer
+vim.keymap.set('n', '<Leader>mi', '<cmd>:PackerInstall<cr>')
+vim.keymap.set('n', '<Leader>mu', '<cmd>:PackerUpdate<cr>')
+vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerSync<cr>')
+
 
 vim.cmd[[packadd packer.nvim]]
 vim.cmd[[autocmd BufWritePost plugins.lua PackerCompile]]
@@ -62,9 +68,11 @@ require('packer').startup(function(use)
   use "hrsh7th/nvim-cmp"
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/vim-vsnip"
+  use "hrsh7th/cmp-buffer"
+  use "hrsh7th/cmp-vsnip"
 
   --- Colorscheme
-  use "tanvirtin/monokai.nvim"
+  use 'folke/lsp-colors.nvim'
   use "itchyny/lightline.vim"
   use 'nvim-treesitter/nvim-treesitter'
   use 'norcalli/nvim-colorizer.lua'
@@ -80,6 +88,23 @@ require('packer').startup(function(use)
 
   --- Fern
   use "lambdalisue/fern.vim"
+
+  --- plenary
+  use "nvim-lua/plenary.nvim"
+
+  --- neogit
+  use{ 'TimUntersberger/neogit' }
+
+  --- Git diff
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+
+  --- fidget (beatiful UI for LSP)
+  use 'j-hui/fidget.nvim'
+
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
   -- opt オプションを付けると遅延読み込みになります。
   -- この場合は opt だけで読み込む契機を指定していないため、
@@ -184,6 +209,12 @@ augroup END
 ]]
 
 -- 3. completion (hrsh7th/nvim-cmp)
+-- lspconfig[server.name].setupに追加
+capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- 最後に追加
+vim.opt.completeopt = "menu,menuone,noselect"
+
 local cmp = require("cmp")
 cmp.setup({
   snippet = {
@@ -191,26 +222,24 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
-  sources = {
-    { name = "nvim_lsp" },
-    -- { name = "buffer" },
-    -- { name = "path" },
-  },
   mapping = cmp.mapping.preset.insert({
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-    ['<C-l>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping.confirm { select = true },
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
   }),
-  experimental = {
-    ghost_text = true,
-  },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "vsnip" },
+  }, {
+    { name = "buffer" },
+  })
 })
 
 -- Color Scheme
--- https://github.com/tanvirtin/monokai.nvim
-require('monokai').setup { }
+-- https://github.com/folke/lsp-colors.nvim
+require("lsp-colors").setup{}
 
 -- Code highlighter
 require('nvim-treesitter.configs').setup {
@@ -227,3 +256,9 @@ require('nvim-treesitter.configs').setup {
 -- Color highlighter
 -- https://github.com/norcalli/nvim-colorizer.lua
 require('colorizer').setup()
+
+-- fidget
+require("fidget").setup{}
+
+-- lualine
+require('lualine').setup()
