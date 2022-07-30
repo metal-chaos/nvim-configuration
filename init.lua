@@ -72,7 +72,7 @@ require('packer').startup(function(use)
   use "hrsh7th/cmp-vsnip"
 
   --- Colorscheme
-  use 'folke/lsp-colors.nvim'
+  use 'tiagovla/tokyodark.nvim'
   use "itchyny/lightline.vim"
   use 'nvim-treesitter/nvim-treesitter'
   use 'norcalli/nvim-colorizer.lua'
@@ -104,6 +104,22 @@ require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+
+  --- buffer line
+  use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
+
+
+  use {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
   }
 
   -- opt オプションを付けると遅延読み込みになります。
@@ -164,14 +180,13 @@ require('packer').startup(function(use)
   -- 依存関係も管理できます。vim-prettyprint は
   -- capture.vim が読み込まれる前に、自動的に packadd されます。
   use{
-    'tyru/capture.vim',
-    requires = {
-      {'thinca/vim-prettyprint', cmd = {'PP', 'PrettyPrint'}},
-    },
-    cmd = {'Capture'},
-  }
-
-end)
+      'tyru/capture.vim',
+      requires = {
+        {'thinca/vim-prettyprint', cmd = {'PP', 'PrettyPrint'}},
+      },
+      cmd = {'Capture'},
+    }
+  end)
 
 -- 1. LSP Sever management
 require('mason').setup()
@@ -238,8 +253,11 @@ cmp.setup({
 })
 
 -- Color Scheme
--- https://github.com/folke/lsp-colors.nvim
-require("lsp-colors").setup{}
+vim.g.tokyodark_transparent_background = false
+vim.g.tokyodark_enable_italic_comment = true
+vim.g.tokyodark_enable_italic = true
+vim.g.tokyodark_color_gamma = "0.8"
+vim.cmd("colorscheme tokyodark")
 
 -- Code highlighter
 require('nvim-treesitter.configs').setup {
@@ -262,3 +280,9 @@ require("fidget").setup{}
 
 -- lualine
 require('lualine').setup()
+
+-- bufferline
+require("bufferline").setup()
+
+-- todo-comments
+require("todo-comments").setup {}

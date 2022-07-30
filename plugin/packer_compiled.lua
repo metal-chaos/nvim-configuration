@@ -75,6 +75,11 @@ _G.packer_plugins = {
     path = "/Users/yutaaoki/.local/share/nvim/site/pack/packer/opt/artify.vim",
     url = "https://github.com/sainnhe/artify.vim"
   },
+  ["bufferline.nvim"] = {
+    loaded = true,
+    path = "/Users/yutaaoki/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
+    url = "https://github.com/akinsho/bufferline.nvim"
+  },
   ["capture.vim"] = {
     commands = { "Capture" },
     loaded = false,
@@ -144,11 +149,6 @@ _G.packer_plugins = {
     path = "/Users/yutaaoki/.local/share/nvim/site/pack/packer/start/lightline.vim",
     url = "https://github.com/itchyny/lightline.vim"
   },
-  ["lsp-colors.nvim"] = {
-    loaded = true,
-    path = "/Users/yutaaoki/.local/share/nvim/site/pack/packer/start/lsp-colors.nvim",
-    url = "https://github.com/folke/lsp-colors.nvim"
-  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/yutaaoki/.local/share/nvim/site/pack/packer/start/lualine.nvim",
@@ -209,6 +209,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/yutaaoki/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["tokyodark.nvim"] = {
+    loaded = true,
+    path = "/Users/yutaaoki/.local/share/nvim/site/pack/packer/start/tokyodark.nvim",
+    url = "https://github.com/tiagovla/tokyodark.nvim"
   },
   ["vim-fold-cycle"] = {
     keys = { { "", "<CR>" } },
@@ -294,8 +299,8 @@ vim.cmd [[au FileType go ++once lua require("packer.load")({'vim-go'}, { ft = "g
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au CursorHold * ++once lua require("packer.load")({'vim-unimpaired'}, { event = "CursorHold *" }, _G.packer_plugins)]]
 vim.cmd [[au FocusLost * ++once lua require("packer.load")({'vim-unimpaired'}, { event = "FocusLost *" }, _G.packer_plugins)]]
+vim.cmd [[au CursorHold * ++once lua require("packer.load")({'vim-unimpaired'}, { event = "CursorHold *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
   -- Function lazy-loads
 time([[Defining lazy-load function autocommands]], true)
