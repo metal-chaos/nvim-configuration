@@ -1,5 +1,4 @@
 local vim = vim
-local api = vim.api
 local o = vim.o
 vim.g.mapleader = ";"
 
@@ -10,7 +9,14 @@ vim.opt.termguicolors = true
 
 -- Indent visible
 o.list = true
-vim.opt.listchars:append({ tab = "»-", trail = "-", eol = "↲", extends = "»", precedes = "«", nbsp = "%" })
+vim.opt.listchars:append({
+	tab = "»-",
+	trail = "-",
+	eol = "↲",
+	extends = "»",
+	precedes = "«",
+	nbsp = "%"
+})
 
 -- Set keymap
 vim.keymap.set('n', '<Leader>j', '<Plug>(jumpcursor-jump)')
@@ -27,7 +33,7 @@ vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 
 --- LSP
-vim.keymap.set('n', '<Leader>s', '<cmd>vim.lsp.buf.format()<CR>')
+vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
 vim.keymap.set('n', '<Leader>kk', '<cmd>:Lspsaga hover_doc<CR>')
 vim.keymap.set('n', '<Leader>kf', '<cmd>:Lspsaga lsp_finder<CR>')
 vim.keymap.set('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
@@ -92,7 +98,10 @@ require('packer').startup(function(use)
 	use "f-person/git-blame.nvim"
 
 	--- Telescope
-	use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
+	use {
+		'nvim-telescope/telescope.nvim',
+		tag = '0.1.0'
+	}
 
 	--- Fern
 	use "lambdalisue/fern.vim"
@@ -104,23 +113,44 @@ require('packer').startup(function(use)
 	use { 'TimUntersberger/neogit' }
 
 	--- Git diff
-	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+	use {
+		'sindrets/diffview.nvim',
+		requires = 'nvim-lua/plenary.nvim'
+	}
 
 	--- fidget (beatiful UI for LSP)
 	use 'j-hui/fidget.nvim'
 
 	use {
 		'nvim-lualine/lualine.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+		requires = {
+			'kyazdani42/nvim-web-devicons',
+			opt = true
+		}
 	}
 
 	--- buffer line
-	use { 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons' }
+	use {
+		'akinsho/bufferline.nvim',
+		tag = "v2.*",
+		requires = 'kyazdani42/nvim-web-devicons'
+	}
 
 	--- jose-elias-alvarez/null-ls.nvim
-	use { "jose-elias-alvarez/null-ls.nvim", requires = { "nvim-lua/plenary.nvim" } }
+	use {
+		"jose-elias-alvarez/null-ls.nvim",
+		requires = { "nvim-lua/plenary.nvim" }
+	}
 
 	use { 'kkharji/lspsaga.nvim' }
+
+	use({
+		'ray-x/navigator.lua',
+		requires = { {
+			'ray-x/guihua.lua',
+			run = 'cd lua/fzy && make'
+		}, { 'neovim/nvim-lspconfig' } }
+	})
 
 	use {
 		"folke/todo-comments.nvim",
@@ -137,17 +167,32 @@ require('packer').startup(function(use)
 	-- opt オプションを付けると遅延読み込みになります。
 	-- この場合は opt だけで読み込む契機を指定していないため、
 	-- `packadd` コマンドを叩かない限り読み込まれることはありません。
-	use { 'wbthomason/packer.nvim', opt = true }
+	use {
+		'wbthomason/packer.nvim',
+		opt = true
+	}
 	-- packer.nvim 自体を遅延読み込みにする理由はまた後ほど。
 
 	-- コマンドを叩いたときに読み込む。
-	use { 'rhysd/git-messenger.vim', opt = true, cmd = { 'GitMessenger' } }
+	use {
+		'rhysd/git-messenger.vim',
+		opt = true,
+		cmd = { 'GitMessenger' }
+	}
 
 	-- 特定のイベントで読み込む
-	use { 'tpope/vim-unimpaired', opt = true, event = { 'FocusLost', 'CursorHold' } }
+	use {
+		'tpope/vim-unimpaired',
+		opt = true,
+		event = { 'FocusLost', 'CursorHold' }
+	}
 
 	-- 特定のファイルタイプのファイルを開いたら読み込む
-	use { 'fatih/vim-go', opt = true, ft = { 'go' } }
+	use {
+		'fatih/vim-go',
+		opt = true,
+		ft = { 'go' }
+	}
 
 	-- 特定のキーを叩いたら読み込む
 	-- この例ではノーマルモードの <CR> にマッピングしていますが、
@@ -159,13 +204,17 @@ require('packer').startup(function(use)
 	use {
 		'arecarn/vim-fold-cycle',
 		opt = true,
-		keys = { '<CR>' },
+		keys = { '<CR>' }
 	}
 
 	-- 特定の VimL 関数を呼ぶと読み込む
 	-- この例だと、任意の場所で Artify('hoge', 'bold') のように呼び出された時に、
 	-- このプラグインも読み込まれます。
-	use { 'sainnhe/artify.vim', opt = true, fn = { 'Artify' } }
+	use {
+		'sainnhe/artify.vim',
+		opt = true,
+		fn = { 'Artify' }
+	}
 
 	-- 実は opt = true は省略できます。読み込む契機（この例では cmd）を指定すると、
 	-- 自動的に遅延読み込みとみなされます。
@@ -174,7 +223,7 @@ require('packer').startup(function(use)
 		cmd = { 'Glow', 'GlowInstall' },
 		-- run オプションを指定すると、インストール時・更新時に
 		-- 実行するコマンドを指定できます。
-		run = [[:GlowInstall]],
+		run = [[:GlowInstall]]
 		-- 先頭に : がついていないなら bash -c '...' で実行されます。
 		-- run = [[npm install]],
 		-- 関数も指定可能です。
@@ -184,7 +233,7 @@ require('packer').startup(function(use)
 	-- 条件が真の時のみ読み込みます。条件は起動時に毎回判定されます。
 	use {
 		'thinca/vim-fontzoom',
-		cond = [[vim.fn.has'gui' == 1]], -- GUI の時のみ読み込む。
+		cond = [[vim.fn.has'gui' == 1]] -- GUI の時のみ読み込む。
 		-- 関数も指定できます。
 		-- conf = function() return vim.fn.has'gui' == 1 end,
 	}
@@ -193,10 +242,11 @@ require('packer').startup(function(use)
 	-- capture.vim が読み込まれる前に、自動的に packadd されます。
 	use {
 		'tyru/capture.vim',
-		requires = {
-			{ 'thinca/vim-prettyprint', cmd = { 'PP', 'PrettyPrint' } },
-		},
-		cmd = { 'Capture' },
+		requires = { {
+			'thinca/vim-prettyprint',
+			cmd = { 'PP', 'PrettyPrint' }
+		} },
+		cmd = { 'Capture' }
 	}
 end)
 
@@ -210,9 +260,13 @@ require('mason-lspconfig').setup_handlers({ function(server)
 		--   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 		--   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
 		-- end,
-		capabilities = require('cmp_nvim_lsp').update_capabilities(
-			vim.lsp.protocol.make_client_capabilities()
-		)
+		capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		on_attach = function(client)
+			if client.name == "tsserver" then
+				client.server_capabilities.document_formatting = false -- 0.7 and earlier
+			end
+			-- rest of the initialization
+		end
 	}
 	require('lspconfig')[server].setup(opt)
 end })
@@ -220,9 +274,9 @@ end })
 -- 2. build-in LSP function
 -- keyboard shortcut
 -- LSP handlers
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
-)
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	virtual_text = false
+})
 -- Reference highlight
 vim.cmd [[
 highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
@@ -237,7 +291,7 @@ augroup END
 
 -- 3. completion (hrsh7th/nvim-cmp)
 -- lspconfig[server.name].setupに追加
-capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- 最後に追加
 vim.opt.completeopt = "menu,menuone,noselect"
@@ -247,21 +301,24 @@ cmp.setup({
 	snippet = {
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body)
-		end,
+		end
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.close(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<CR>"] = cmp.mapping.confirm({
+			select = true
+		})
 	}),
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "vsnip" },
+	sources = cmp.config.sources({ {
+		name = "nvim_lsp"
 	}, {
-		{ name = "buffer" },
-	})
+		name = "vsnip"
+	} }, { {
+		name = "buffer"
+	} })
 })
 
 -- Color Scheme
@@ -276,10 +333,9 @@ require('nvim-treesitter.configs').setup {
 	highlight = {
 		enable = true, -- syntax highlightを有効にする
 		disable = { -- 一部の言語では無効にする
-			'toml',
-		}
+			'toml' }
 	},
-	ensure_installed = 'all', -- :TSInstall allと同じ
+	ensure_installed = 'all' -- :TSInstall allと同じ
 	-- ensure_installed = 'maintained' とすることもできる
 }
 
@@ -299,17 +355,20 @@ require("bufferline").setup()
 -- todo-comments
 require("todo-comments").setup {}
 
--- Formatting
+-- Formatter
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
 -- https://zenn.dev/nazo6/articles/c2f16b07798bab
-local null_ls = require "null-ls"
+local null_ls = require("null-ls")
 null_ls.setup {
-	sources = {
-		null_ls.builtins.formatting.prettier.with {
-			prefer_local = "node_modules/.bin",
-		},
-	},
+	sources = { null_ls.builtins.formatting.prettier.with {
+		prefer_local = "node_modules/.bin"
+	}, null_ls.builtins.formatting.phpcsfixer }
 }
 
 -- https://github.com/kkharji/lspsaga.nvim
 require('lspsaga').setup {}
+
+-- https://github.com/ray-x/navigator.lua
+require 'navigator'.setup({
+	mason = true,
+})
