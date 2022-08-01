@@ -1,1 +1,0 @@
-/Users/yutaaoki/.config/nvim/dein/repos/github.com/norcalli/nvim-colorizer.lua/lua/colorizer/nvim.lua
