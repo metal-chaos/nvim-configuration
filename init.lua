@@ -370,5 +370,4 @@ require('lspsaga').setup {}
 
 -- https://github.com/ray-x/navigator.lua
 require 'navigator'.setup({
-	mason = true,
 })
