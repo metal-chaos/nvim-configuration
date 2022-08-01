@@ -15,10 +15,16 @@ vim.opt.listchars:append({ tab = "»-", trail = "-", eol = "↲", extends = "»"
 -- Set keymap
 vim.keymap.set('n', '<Leader>j', '<Plug>(jumpcursor-jump)')
 vim.keymap.set('n', '<Leader>q', '<cmd>:q<cr>')
+vim.keymap.set('n', '<Leader>q!', '<cmd>:q!<cr>')
 vim.keymap.set('n', '<Leader>w', '<cmd>:w<cr>')
 vim.keymap.set('n', '<Leader>wq', '<cmd>:wq<cr>')
 vim.keymap.set('n', '<Leader>2', '<cmd>vi"y<cr>')
 vim.keymap.set('n', "<Leader>7", "<cmd>vi'y<cr>")
+
+--- Split screen
+vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
+vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
+vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 
 --- LSP
 vim.keymap.set('n', '<Leader>K', '<cmd>lua vim.lsp.buf.hover()<CR>')
@@ -36,13 +42,13 @@ vim.keymap.set('n', '<Leader>g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 
 --- Telescope
 vim.keymap.set('n', '<Leader>p', '<cmd>Telescope find_files hidden=true theme=get_dropdown<CR>')
-vim.keymap.set('n', '<Leader>gr', '<cmd>Telescope live_grep theme=get_dropdown<CR>')
+vim.keymap.set('n', '<Leader>f', '<cmd>Telescope live_grep theme=get_dropdown<CR>')
 vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers theme=get_dropdown<CR>')
-vim.keymap.set('n', '<Leader>h', '<cmd>Telescope oldfiles theme=get_dropdown<CR>')
+vim.keymap.set('n', '<Leader>H', '<cmd>Telescope oldfiles theme=get_dropdown<CR>')
 vim.keymap.set('n', '<Leader>gb', '<cmd>Telescope git_branches theme=get_dropdown<CR>')
 
 --- Fern
-vim.keymap.set('n', '<Leader>f', '<cmd>Fern . -reveal=% -drawer<CR>')
+vim.keymap.set('n', '<Leader>e', '<cmd>Fern . -reveal=% -drawer<CR>')
 
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
@@ -51,7 +57,10 @@ vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
 vim.keymap.set('n', '<Leader>mi', '<cmd>:PackerInstall<cr>')
 vim.keymap.set('n', '<Leader>mu', '<cmd>:PackerUpdate<cr>')
 vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerSync<cr>')
+vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerCompile<cr>')
 
+--- neogit
+vim.keymap.set('n', '<Leader>ng', '<cmd>:Neogit<cr>')
 
 vim.cmd [[packadd packer.nvim]]
 vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
