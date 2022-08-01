@@ -5,7 +5,7 @@ vim.g.mapleader = ";"
 
 -- Basic configuration
 o.number = true
-vim.opt.clipboard:append{'unnamedplus'}
+vim.opt.clipboard:append { 'unnamedplus' }
 vim.opt.termguicolors = true
 
 -- Indent visible
@@ -15,7 +15,7 @@ vim.opt.listchars:append({ tab = "»-", trail = "-", eol = "↲", extends = "»"
 -- Set keymap
 vim.keymap.set('n', '<Leader>j', '<Plug>(jumpcursor-jump)')
 vim.keymap.set('n', '<Leader>q', '<cmd>:q<cr>')
-vim.keymap.set('n', '<Leader>q!', '<cmd>:q!<cr>')
+vim.keymap.set('n', '<Leader>Q', '<cmd>:q!<cr>')
 vim.keymap.set('n', '<Leader>w', '<cmd>:w<cr>')
 vim.keymap.set('n', '<Leader>wq', '<cmd>:wq<cr>')
 vim.keymap.set('n', '<Leader>2', '<cmd>vi"y<cr>')
@@ -27,18 +27,17 @@ vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 
 --- LSP
-vim.keymap.set('n', '<Leader>K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
-vim.keymap.set('n', '<Leader>r', '<cmd>lua vim.lsp.buf.references()<CR>')
-vim.keymap.set('n', '<Leader>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
-vim.keymap.set('n', '<Leader>D', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-vim.keymap.set('n', '<Leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-vim.keymap.set('n', '<Leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-vim.keymap.set('n', '<Leader>gn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-vim.keymap.set('n', '<Leader>ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-vim.keymap.set('n', '<Leader>ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
-vim.keymap.set('n', '<Leader>g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-vim.keymap.set('n', '<Leader>g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+vim.keymap.set('n', '<Leader>s', '<cmd>vim.lsp.buf.format()<CR>')
+vim.keymap.set('n', '<Leader>kk', '<cmd>:Lspsaga hover_doc<CR>')
+vim.keymap.set('n', '<Leader>kf', '<cmd>:Lspsaga lsp_finder<CR>')
+vim.keymap.set('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
+vim.keymap.set('n', '<Leader>ki', '<cmd>:Lspsaga signature_help<CR>')
+vim.keymap.set('n', '<Leader>kr', '<cmd>:Lspsaga rename<CR>')
+
+--- Diagnostics
+vim.keymap.set('n', '<Leader>e', '<cmd>:Lspsaga show_line_diagnostics<CR>')
+vim.keymap.set('n', '<Leader>el', '<cmd>:Lspsaga diagnostic_jump_next<CR>')
+vim.keymap.set('n', '<Leader>eh', '<cmd>:Lspsaga diagnostic_jump_prev<CR>')
 
 --- Telescope
 vim.keymap.set('n', '<Leader>p', '<cmd>Telescope find_files hidden=true theme=get_dropdown<CR>')
@@ -48,7 +47,7 @@ vim.keymap.set('n', '<Leader>H', '<cmd>Telescope oldfiles theme=get_dropdown<CR>
 vim.keymap.set('n', '<Leader>gb', '<cmd>Telescope git_branches theme=get_dropdown<CR>')
 
 --- Fern
-vim.keymap.set('n', '<Leader>e', '<cmd>Fern . -reveal=% -drawer<CR>')
+vim.keymap.set('n', 'F', '<cmd>Fern . -reveal=% -drawer<CR>')
 
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
@@ -118,6 +117,10 @@ require('packer').startup(function(use)
 	--- buffer line
 	use { 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons' }
 
+	--- jose-elias-alvarez/null-ls.nvim
+	use { "jose-elias-alvarez/null-ls.nvim", requires = { "nvim-lua/plenary.nvim" } }
+
+	use { 'kkharji/lspsaga.nvim' }
 
 	use {
 		"folke/todo-comments.nvim",
@@ -295,3 +298,18 @@ require("bufferline").setup()
 
 -- todo-comments
 require("todo-comments").setup {}
+
+-- Formatting
+-- https://github.com/jose-elias-alvarez/null-ls.nvim
+-- https://zenn.dev/nazo6/articles/c2f16b07798bab
+local null_ls = require "null-ls"
+null_ls.setup {
+	sources = {
+		null_ls.builtins.formatting.prettier.with {
+			prefer_local = "node_modules/.bin",
+		},
+	},
+}
+
+-- https://github.com/kkharji/lspsaga.nvim
+require('lspsaga').setup {}
