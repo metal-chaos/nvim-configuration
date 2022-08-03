@@ -4,7 +4,7 @@ vim.g.mapleader = ";"
 
 -- Basic configuration
 o.number = true
-vim.opt.clipboard:append({ unnamedplus = true })
+vim.o.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 vim.o.hidden = true
 vim.o.tabstop = 4
@@ -59,6 +59,9 @@ vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerCompile<cr>')
 
 --- neogit
 vim.keymap.set('n', '<Leader>ng', '<cmd>:Neogit<cr>')
+
+--- Trouble
+vim.keymap.set('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
 
 vim.cmd [[packadd packer.nvim]]
 vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
@@ -160,6 +163,18 @@ require('packer').startup(function(use)
 				-- your configuration comes here
 				-- or leave it empty to use the default settings
 				-- refer to the configuration section below
+			}
+		end
+	}
+
+	--- Trouble (show error messages at the bottom of the screen)
+	--- https://github.com/folke/trouble.nvim
+	use {
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup {
+				-- your configuration comes here
 			}
 		end
 	}
