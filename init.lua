@@ -17,8 +17,9 @@ vim.keymap.set('n', '<Leader>q', '<cmd>:q<cr>')
 vim.keymap.set('n', '<Leader>Q', '<cmd>:q!<cr>')
 vim.keymap.set('n', '<Leader>w', '<cmd>:w<cr>')
 vim.keymap.set('n', '<Leader>wq', '<cmd>:wq<cr>')
-vim.keymap.set('n', '<Leader>2', '<cmd>vi"y<cr>')
-vim.keymap.set('n', "<Leader>7", "<cmd>vi'y<cr>")
+vim.keymap.set('n', '<Leader>2', '<cmd>ysiw"<cr>')
+vim.keymap.set('n', "<Leader>7", "<cmd>ysiw'<cr>")
+vim.keymap.set('n', "<Leader>9", "<cmd>ysiw)<cr>")
 
 --- Split screen
 vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
@@ -176,6 +177,16 @@ require('packer').startup(function(use)
 			require("trouble").setup {
 				-- your configuration comes here
 			}
+		end
+	}
+
+	--- Vim-surround
+	--- https://github.com/tpope/vim-surround
+	use {
+		"tpope/vim-surround",
+		config = function()
+			require("vim-surround").setup {}
+
 		end
 	}
 
