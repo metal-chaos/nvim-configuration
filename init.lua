@@ -4,7 +4,7 @@ vim.g.mapleader = ";"
 
 -- Basic configuration
 o.number = true
-vim.opt.clipboard:append { 'unnamedplus' }
+vim.opt.clipboard:append({ unnamedplus = true })
 vim.opt.termguicolors = true
 
 -- Indent visible
@@ -140,6 +140,13 @@ require('packer').startup(function(use)
 	use {
 		"jose-elias-alvarez/null-ls.nvim",
 		requires = { "nvim-lua/plenary.nvim" }
+	}
+
+	use {
+		'lewis6991/gitsigns.nvim',
+		config = function()
+			require('gitsigns').setup()
+		end
 	}
 
 	use { 'kkharji/lspsaga.nvim' }
@@ -324,7 +331,7 @@ cmp.setup({
 -- Color Scheme
 vim.g.tokyodark_transparent_background = false
 vim.g.tokyodark_enable_italic_comment = true
-vim.g.tokyodark_enable_italic = true
+vim.g.tokyodark_enable_italic = false
 vim.g.tokyodark_color_gamma = "0.8"
 vim.cmd("colorscheme tokyodark")
 
