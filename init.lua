@@ -10,6 +10,7 @@ vim.o.hidden = true
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
+vim.opt.laststatus = 3
 
 -- Set keymap
 vim.keymap.set('n', '<Leader>j', '<Plug>(jumpcursor-jump)')
@@ -17,9 +18,7 @@ vim.keymap.set('n', '<Leader>q', '<cmd>:q<cr>')
 vim.keymap.set('n', '<Leader>Q', '<cmd>:q!<cr>')
 vim.keymap.set('n', '<Leader>w', '<cmd>:w<cr>')
 vim.keymap.set('n', '<Leader>wq', '<cmd>:wq<cr>')
-vim.keymap.set('n', '<Leader>2', '<cmd>ysiw"<cr>')
-vim.keymap.set('n', "<Leader>7", "<cmd>ysiw'<cr>")
-vim.keymap.set('n', "<Leader>9", "<cmd>ysiw)<cr>")
+vim.keymap.set('n', '<Leader>i', '<cmd>tabnew<cr>')
 
 --- Split screen
 vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
@@ -127,10 +126,11 @@ require('packer').startup(function(use)
 	}
 
 	--- buffer line
-	use {
-		'akinsho/bufferline.nvim',
-		tag = "v2.*",
-		requires = 'kyazdani42/nvim-web-devicons'
+	use { 'akinsho/nvim-bufferline.lua',
+		requires = 'kyazdani42/nvim-web-devicons',
+		config = function()
+			require("bufferline").setup {}
+		end
 	}
 
 	--- jose-elias-alvarez/null-ls.nvim
@@ -180,15 +180,16 @@ require('packer').startup(function(use)
 		end
 	}
 
-	--- Vim-surround
-	--- https://github.com/tpope/vim-surround
-	use {
-		"tpope/vim-surround",
+	--- nvin-surround
+	--- https://github.com/kylechui/nvim-surround
+	use({
+		"kylechui/nvim-surround",
 		config = function()
-			require("vim-surround").setup {}
-
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
 		end
-	}
+	})
 
 	--- Indent configuration
 	--- https://github.com/lukas-reineke/indent-blankline.nvim
@@ -378,12 +379,6 @@ require("fidget").setup {}
 
 -- lualine
 require('lualine').setup()
-
--- bufferline
-require("bufferline").setup()
-
--- todo-comments
-require("todo-comments").setup {}
 
 -- Formatter
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
