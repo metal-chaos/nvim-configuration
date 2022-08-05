@@ -26,7 +26,7 @@ vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 
 --- LSP
-vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
+-- vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
 vim.keymap.set('n', '<Leader>kk', '<cmd>:Lspsaga hover_doc<CR>')
 vim.keymap.set('n', '<Leader>kf', '<cmd>:Lspsaga lsp_finder<CR>')
 vim.keymap.set('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
@@ -281,24 +281,47 @@ require('packer').startup(function(use)
 	}
 end)
 
+-- Formatter
+-- https://github.com/jose-elias-alvarez/null-ls.nvim
+-- https://zenn.dev/nazo6/articles/c2f16b07798bab
+local null_ls = require("null-ls")
+null_ls.setup {
+	sources = {
+		null_ls.builtins.formatting.prettier,
+		null_ls.builtins.formatting.phpcsfixer
+	}
+}
+
 -- 1. LSP Sever management
 require('mason').setup()
 require('mason-lspconfig').setup_handlers({ function(server)
-	local opt = {
-		-- -- Function executed when the LSP server startup
-		-- on_attach = function(client, bufnr)
-		--   local opts = { noremap=true, silent=true }
-		--   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-		--   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-		-- end,
-		capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-		on_attach = function(client)
-			-- LSPサーバーのフォーマット機能を無効にするには下の行をコメントアウト
-			-- 例えばtypescript-language-serverにはコードのフォーマット機能が付いているが代わりにprettierでフォーマットしたいときなどに使う
-			client.server_capabilities.document_formatting = false
+	local lsp_formatting = function(bufnr)
+		vim.lsp.buf.format({
+			filter = function(client)
+				-- apply whatever logic you want (in this example, we'll only use null-ls)
+				return client.name == "null-ls"
+			end,
+			bufnr = bufnr,
+		})
+	end
+
+	-- if you want to set up formatting on save, you can use this as a callback
+	local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+	-- add to your shared on_attach callback
+	local on_attach = function(client, bufnr)
+		if client.supports_method("textDocument/formatting") then
+			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = augroup,
+				buffer = bufnr,
+				callback = function()
+					lsp_formatting(bufnr)
+				end,
+			})
 		end
-	}
-	require('lspconfig')[server].setup { on_attach = on_attach }
+	end
+	require('lspconfig')[server].setup { on_attach }
 end })
 
 -- 2. build-in LSP function
@@ -374,19 +397,6 @@ require("fidget").setup {}
 
 -- lualine
 require('lualine').setup()
-
--- Formatter
--- https://github.com/jose-elias-alvarez/null-ls.nvim
--- https://zenn.dev/nazo6/articles/c2f16b07798bab
-local null_ls = require("null-ls")
-null_ls.setup {
-	sources = {
-		null_ls.builtins.formatting.prettier.with {
-			prefer_local = "node_modules/.bin"
-		},
-		null_ls.builtins.formatting.phpcsfixer
-	}
-}
 
 -- https://github.com/kkharji/lspsaga.nvim
 require('lspsaga').setup {}
