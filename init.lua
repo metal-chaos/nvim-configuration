@@ -293,13 +293,12 @@ require('mason-lspconfig').setup_handlers({ function(server)
 		-- end,
 		capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		on_attach = function(client)
-			if client.name == "tsserver" then
-				client.server_capabilities.document_formatting = false -- 0.7 and earlier
-			end
-			-- rest of the initialization
+			-- LSPサーバーのフォーマット機能を無効にするには下の行をコメントアウト
+			-- 例えばtypescript-language-serverにはコードのフォーマット機能が付いているが代わりにprettierでフォーマットしたいときなどに使う
+			client.server_capabilities.document_formatting = false
 		end
 	}
-	require('lspconfig')[server].setup(opt)
+	require('lspconfig')[server].setup { on_attach = on_attach }
 end })
 
 -- 2. build-in LSP function
@@ -319,10 +318,6 @@ augroup lsp_document_highlight
   autocmd CursorMoved,CursorMovedI * lua vim.lsp.buf.clear_references()
 augroup END
 ]]
-
--- 3. completion (hrsh7th/nvim-cmp)
--- lspconfig[server.name].setupに追加
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- 最後に追加
 vim.opt.completeopt = "menu,menuone,noselect"
@@ -385,9 +380,12 @@ require('lualine').setup()
 -- https://zenn.dev/nazo6/articles/c2f16b07798bab
 local null_ls = require("null-ls")
 null_ls.setup {
-	sources = { null_ls.builtins.formatting.prettier.with {
-		prefer_local = "node_modules/.bin"
-	}, null_ls.builtins.formatting.phpcsfixer }
+	sources = {
+		null_ls.builtins.formatting.prettier.with {
+			prefer_local = "node_modules/.bin"
+		},
+		null_ls.builtins.formatting.phpcsfixer
+	}
 }
 
 -- https://github.com/kkharji/lspsaga.nvim
