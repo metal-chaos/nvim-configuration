@@ -26,7 +26,7 @@ vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 
 --- LSP
--- vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
+vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 vim.keymap.set('n', '<Leader>kk', '<cmd>:Lspsaga hover_doc<CR>')
 vim.keymap.set('n', '<Leader>kf', '<cmd>:Lspsaga lsp_finder<CR>')
 vim.keymap.set('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
@@ -281,13 +281,25 @@ require('packer').startup(function(use)
 	}
 end)
 
+print("Before")
+
 -- Formatter
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
 -- https://zenn.dev/nazo6/articles/c2f16b07798bab
 -- Maybe this way? -> https://github.com/jose-elias-alvarez/null-ls.nvim/issues/844
 local null_ls = require("null-ls")
+local lsp_formatting = function(bufnr)
+	vim.lsp.buf.format({
+		filter = function(client)
+			-- apply whatever logic you want (in this example, we'll only use null-ls)
+			return client.name == "null-ls"
+		end,
+		bufnr = bufnr,
+	})
+end
+-- if you want to set up formatting on save, you can use this as a callback
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-require("null-ls").setup({
+null_ls.setup({
 	sources = {
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.goimports,
@@ -298,7 +310,9 @@ require("null-ls").setup({
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = augroup,
 				buffer = bufnr,
-				callback = vim.lsp.buf.formatting_sync,
+				callback = function()
+					lsp_formatting(bufnr)
+				end,
 			})
 		end
 	end,
