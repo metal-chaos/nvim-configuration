@@ -87,6 +87,15 @@ require('packer').startup(function(use)
 	use 'nvim-treesitter/nvim-treesitter'
 	use 'norcalli/nvim-colorizer.lua'
 
+	--- buffer line
+	use { 'akinsho/nvim-bufferline.lua',
+		requires = 'kyazdani42/nvim-web-devicons',
+		tag = "v2.*",
+		config = function()
+			require("bufferline").setup {}
+		end
+	}
+
 	--- Cursor mover
 	use "skanehira/jumpcursor.vim"
 
@@ -123,14 +132,6 @@ require('packer').startup(function(use)
 			'kyazdani42/nvim-web-devicons',
 			opt = true
 		}
-	}
-
-	--- buffer line
-	use { 'akinsho/nvim-bufferline.lua',
-		requires = 'kyazdani42/nvim-web-devicons',
-		config = function()
-			require("bufferline").setup {}
-		end
 	}
 
 	--- jose-elias-alvarez/null-ls.nvim
