@@ -15,7 +15,7 @@ vim.opt.laststatus = 3
 
 -- NeoVide configuration
 g.neovide_transparency = 0.8
-g.neovide_cursor_vfx_mode = "torpedo"
+g.neovide_cursor_vfx_mode = "ripple"
 
 -- Set keymap
 vim.keymap.set('n', '<Leader>j', '<Plug>(jumpcursor-jump)')
@@ -197,9 +197,17 @@ require('packer').startup(function(use)
 		end
 	})
 
+	use("petertriho/nvim-scrollbar")
+
 	--- Indent configuration
 	--- https://github.com/lukas-reineke/indent-blankline.nvim
 	use "lukas-reineke/indent-blankline.nvim"
+
+	--- Indent configuration
+	use {
+		"windwp/nvim-autopairs",
+		config = function() require("nvim-autopairs").setup {} end
+	}
 
 	-- opt オプションを付けると遅延読み込みになります。
 	-- この場合は opt だけで読み込む契機を指定していないため、
@@ -405,6 +413,8 @@ require("indent_blankline").setup {
 		"IndentBlanklineIndent6",
 	},
 }
+
+require("scrollbar").setup()
 
 -- Formatter
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
