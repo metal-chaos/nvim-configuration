@@ -1,6 +1,7 @@
 local vim = vim
 local o = vim.o
-vim.g.mapleader = ";"
+local g = vim.g
+g.mapleader = ";"
 
 -- Basic configuration
 o.number = true
@@ -11,6 +12,10 @@ vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.opt.laststatus = 3
+
+-- NeoVide configuration
+g.neovide_transparency = 0.8
+g.neovide_cursor_vfx_mode = "torpedo"
 
 -- Set keymap
 vim.keymap.set('n', '<Leader>j', '<Plug>(jumpcursor-jump)')
@@ -26,7 +31,7 @@ vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 
 --- LSP
-vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format<CR>')
 vim.keymap.set('n', '<Leader>kk', '<cmd>:Lspsaga hover_doc<CR>')
 vim.keymap.set('n', '<Leader>kf', '<cmd>:Lspsaga lsp_finder<CR>')
 vim.keymap.set('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
