@@ -44,11 +44,14 @@ vim.keymap.set('n', '<Leader>el', '<cmd>:Lspsaga diagnostic_jump_next<CR>')
 vim.keymap.set('n', '<Leader>eh', '<cmd>:Lspsaga diagnostic_jump_prev<CR>')
 
 --- Telescope
-vim.keymap.set('n', '<Leader>p', '<cmd>Telescope find_files hidden=true theme=get_dropdown<CR>')
-vim.keymap.set('n', '<Leader>f', '<cmd>Telescope live_grep theme=get_dropdown<CR>')
-vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers theme=get_dropdown<CR>')
-vim.keymap.set('n', '<Leader>H', '<cmd>Telescope oldfiles theme=get_dropdown<CR>')
-vim.keymap.set('n', '<Leader>gb', '<cmd>Telescope git_branches theme=get_dropdown<CR>')
+vim.keymap.set('n', '<Leader>p', '<cmd>Telescope find_files hidden=true theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>f', '<cmd>Telescope live_grep theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>H', '<cmd>Telescope oldfiles theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>gb', '<cmd>Telescope git_branches theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
+--- neogit
+vim.keymap.set('n', '<Leader>gn', '<cmd>:Neogit<cr>')
 
 --- Fern
 vim.keymap.set('n', 'F', '<cmd>Fern . -reveal=% -drawer<CR>')
@@ -62,8 +65,6 @@ vim.keymap.set('n', '<Leader>mu', '<cmd>:PackerUpdate<cr>')
 vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerSync<cr>')
 vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerCompile<cr>')
 
---- neogit
-vim.keymap.set('n', '<Leader>ng', '<cmd>:Neogit<cr>')
 
 --- Trouble
 vim.keymap.set('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
