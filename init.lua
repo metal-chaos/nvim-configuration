@@ -53,9 +53,6 @@ vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
 --- neogit
 vim.keymap.set('n', '<Leader>gn', '<cmd>:Neogit<cr>')
 
---- Fern
-vim.keymap.set('n', 'F', '<cmd>Fern . -reveal=% -drawer<CR>')
-
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
 
@@ -65,6 +62,8 @@ vim.keymap.set('n', '<Leader>mu', '<cmd>:PackerUpdate<cr>')
 vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerSync<cr>')
 vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerCompile<cr>')
 
+--- File explorer
+vim.keymap.set('n', '<Leader>F', '<cmd>:NvimTreeFindFile<cr>')
 
 --- Trouble
 vim.keymap.set('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
@@ -114,8 +113,14 @@ require('packer').startup(function(use)
 		tag = '0.1.0'
 	}
 
-	--- Fern
-	use "lambdalisue/fern.vim"
+	-- File explorer
+	use {
+		'kyazdani42/nvim-tree.lua',
+		requires = {
+			'kyazdani42/nvim-web-devicons', -- optional, for file icons
+		},
+		tag = 'nightly', -- optional, updated every week. (see issue #1193)
+	}
 
 	--- plenary
 	use "nvim-lua/plenary.nvim"
@@ -416,6 +421,26 @@ require("indent_blankline").setup {
 }
 
 require("scrollbar").setup()
+
+-- File explorer
+-- https://github.com/kyazdani42/nvim-tree.lua
+require("nvim-tree").setup({
+	sort_by = "case_sensitive",
+	view = {
+		adaptive_size = true,
+		mappings = {
+			list = {
+				{ key = "u", action = "dir_up" },
+			},
+		},
+	},
+	renderer = {
+		group_empty = true,
+	},
+	filters = {
+		dotfiles = true,
+	},
+})
 
 -- Formatter
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
