@@ -31,7 +31,7 @@ vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 
 --- LSP
-vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format<CR>')
+vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
 vim.keymap.set('n', '<Leader>kk', '<cmd>:Lspsaga hover_doc<CR>')
 vim.keymap.set('n', '<Leader>kf', '<cmd>:Lspsaga lsp_finder<CR>')
 vim.keymap.set('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
