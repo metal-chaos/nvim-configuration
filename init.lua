@@ -80,7 +80,7 @@ vim.keymap.set('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
 
 -- New commands
 vim.api.nvim_create_user_command("Cppath", function()
-	local path = vim.fn.expand("%:h")
+	local path = vim.fn.expand('%')
 	print(path)
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
