@@ -25,10 +25,14 @@ vim.keymap.set('n', '<Leader>w', '<cmd>:w<cr>')
 vim.keymap.set('n', '<Leader>wq', '<cmd>:wq<cr>')
 vim.keymap.set('n', '<Leader>i', '<cmd>tabnew<cr>')
 
+-- buffers
+vim.keymap.set('n', '<Leader>ls', '<cmd>:ls<cr>')
+
 --- Split screen
 vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
 vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
+vim.keymap.set('n', "<Leader>k", "<C-w>h<cr>")
 
 --- LSP
 vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
@@ -52,6 +56,8 @@ vim.keymap.set('n', '<Leader>gb', '<cmd>Telescope git_branches theme=get_ivy<CR>
 vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
 --- neogit
 vim.keymap.set('n', '<Leader>gn', '<cmd>:Neogit<cr>')
+-- git-conflict
+vim.keymap.set('n', '<Leader>gv', '<cmd>GitConflictListQf<CR>')
 
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
@@ -60,7 +66,7 @@ vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
 vim.keymap.set('n', '<Leader>mi', '<cmd>:PackerInstall<cr>')
 vim.keymap.set('n', '<Leader>mu', '<cmd>:PackerUpdate<cr>')
 vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerSync<cr>')
-vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerCompile<cr>')
+vim.keymap.set('n', '<Leader>mc', '<cmd>:PackerCompile<cr>')
 
 --- File explorer
 vim.keymap.set('n', '<Leader>F', '<cmd>:NvimTreeFindFile<cr>')
@@ -85,6 +91,7 @@ require('packer').startup(function(use)
 	use "hrsh7th/vim-vsnip"
 	use "hrsh7th/cmp-buffer"
 	use "hrsh7th/cmp-vsnip"
+	use { 'hrsh7th/nvim-compe' }
 
 	--- Colorscheme
 	use 'tiagovla/tokyodark.nvim'
@@ -110,7 +117,19 @@ require('packer').startup(function(use)
 	--- Telescope
 	use {
 		'nvim-telescope/telescope.nvim',
-		tag = '0.1.0'
+		tag = '0.1.0',
+		defaults = {
+			vimgrep_arguments = {
+				'rg',
+				'--color=never',
+				'--no-heading',
+				'--with-filename',
+				'--line-number',
+				'--column',
+				'--smart-case',
+				'-u',
+			}
+		}
 	}
 
 	-- File explorer
@@ -214,6 +233,10 @@ require('packer').startup(function(use)
 		"windwp/nvim-autopairs",
 		config = function() require("nvim-autopairs").setup {} end
 	}
+
+	use { 'akinsho/git-conflict.nvim', tag = "*", config = function()
+		require('git-conflict').setup()
+	end }
 
 	-- opt オプションを付けると遅延読み込みになります。
 	-- この場合は opt だけで読み込む契機を指定していないため、
@@ -488,3 +511,7 @@ null_ls.setup({
 	on_attach = on_attach,
 	debug = true,
 })
+
+-- compe (used mainly for autoimport)
+-- https://github.com/hrsh7th/nvim-compe
+require('compe').setup {}
