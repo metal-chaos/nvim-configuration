@@ -408,7 +408,8 @@ require('nvim-treesitter.configs').setup {
 		disable = { -- 一部の言語では無効にする
 			'toml' }
 	},
-	ensure_installed = 'all' -- :TSInstall allと同じ
+	ensure_installed = 'all', -- :TSInstall allと同じ
+	ignore_install = { "phpdoc" },
 	-- ensure_installed = 'maintained' とすることもできる
 }
 
@@ -527,3 +528,6 @@ null_ls.setup({
 -- compe (used mainly for autoimport)
 -- https://github.com/hrsh7th/nvim-compe
 require('compe').setup {}
+
+-- Packer compile
+vim.api.nvim_command(':PackerCompile')
