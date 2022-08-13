@@ -46,6 +46,11 @@ vim.keymap.set('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
 vim.keymap.set('n', '<Leader>ki', '<cmd>:Lspsaga signature_help<CR>')
 vim.keymap.set('n', '<Leader>kr', '<cmd>:Lspsaga rename<CR>')
 
+-- Move to a directory
+vim.keymap.set('n', '<Leader>cdt', '<cmd>cd ~/trander<CR>')
+vim.keymap.set('n', '<Leader>cds', '<cmd>cd ~/socialdog/web<CR>')
+vim.keymap.set('n', '<Leader>cdg', '<cmd>cd ~/socialdog/web/application_go<CR>')
+
 --- Diagnostics
 vim.keymap.set('n', '<Leader>e', '<cmd>:Lspsaga show_line_diagnostics<CR>')
 vim.keymap.set('n', '<Leader>el', '<cmd>:Lspsaga diagnostic_jump_next<CR>')
@@ -62,6 +67,13 @@ vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>gn', '<cmd>:Neogit<cr>')
 -- git-conflict
 vim.keymap.set('n', '<Leader>gv', '<cmd>GitConflictListQf<CR>')
+
+vim.keymap.set('n', '<Leader>;c', '<cmd>GoCmt<CR>')
+vim.keymap.set('n', '<Leader>;a', '<cmd>GoAddTag<CR>')
+vim.keymap.set('n', '<Leader>;r', '<cmd>GoRmTag<CR>')
+vim.keymap.set('n', '<Leader>;t', '<cmd>GoTest -n<CR>')
+vim.keymap.set('n', '<Leader>;e', '<cmd>GoIfErr<CR>')
+vim.keymap.set('n', '<Leader>;i', '<cmd>GoImport<CR>')
 
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
@@ -235,6 +247,11 @@ require('packer').startup(function(use)
 	})
 
 	use("petertriho/nvim-scrollbar")
+
+	--- Modern Go plugin
+	--- https://github.com/ray-x/go.nvim
+	use 'ray-x/go.nvim'
+	use 'ray-x/guihua.lua'
 
 	--- Indent configuration
 	--- https://github.com/lukas-reineke/indent-blankline.nvim
@@ -531,3 +548,7 @@ require('compe').setup {}
 
 -- Packer compile
 vim.api.nvim_command(':PackerCompile')
+
+-- go.nvim
+-- https://github.com/ray-x/go.nvim
+require('go').setup()
