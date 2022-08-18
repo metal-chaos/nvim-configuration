@@ -58,9 +58,9 @@ vim.keymap.set('n', '<Leader>eh', '<cmd>:Lspsaga diagnostic_jump_prev<CR>')
 
 --- Telescope
 vim.keymap.set('n', '<Leader>p', '<cmd>Telescope find_files hidden=true theme=get_ivy<CR>')
-vim.keymap.set('n', '<Leader>f', '<cmd>Telescope live_grep theme=get_ivy<CR>')
-vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers theme=get_ivy<CR>')
-vim.keymap.set('n', '<Leader>H', '<cmd>Telescope oldfiles theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>f', '<cmd>Telescope live_grep hidden=true theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers hidden=true theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>H', '<cmd>Telescope oldfiles hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>gb', '<cmd>Telescope git_branches theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
 --- neogit
@@ -93,7 +93,6 @@ vim.keymap.set('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
 -- New commands
 vim.api.nvim_create_user_command("Cppath", function()
 	local path = vim.fn.expand('%')
-	print(path)
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
@@ -102,6 +101,7 @@ vim.cmd [[packadd packer.nvim]]
 vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 
 require('packer').startup(function(use)
+
 	-- 起動時に読み込むプラグインは名前を書くだけです
 	use 'tpope/vim-fugitive'
 	use 'tpope/vim-repeat'
@@ -116,6 +116,19 @@ require('packer').startup(function(use)
 	use "hrsh7th/cmp-buffer"
 	use "hrsh7th/cmp-vsnip"
 	use { 'hrsh7th/nvim-compe' }
+
+	--- nvin-surround
+	--- https://github.com/kylechui/nvim-surround
+	use({
+		"kylechui/nvim-surround",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end
+	})
+
+	if vim.g.vscode then return nil end
 
 	--- Colorscheme
 	use 'tiagovla/tokyodark.nvim'
@@ -235,17 +248,6 @@ require('packer').startup(function(use)
 		end
 	}
 
-	--- nvin-surround
-	--- https://github.com/kylechui/nvim-surround
-	use({
-		"kylechui/nvim-surround",
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end
-	})
-
 	use("petertriho/nvim-scrollbar")
 
 	--- Modern Go plugin
@@ -263,9 +265,10 @@ require('packer').startup(function(use)
 		config = function() require("nvim-autopairs").setup {} end
 	}
 
-	use { 'akinsho/git-conflict.nvim', tag = "*", config = function()
-		require('git-conflict').setup()
-	end }
+	-- TODO: Temporarily deleted
+	--	use { 'akinsho/git-conflict.nvim', tag = "*", config = function()
+	--		require('git-conflict').setup()
+	--	end }
 
 	-- opt オプションを付けると遅延読み込みになります。
 	-- この場合は opt だけで読み込む契機を指定していないため、
@@ -491,9 +494,13 @@ require("nvim-tree").setup({
 		group_empty = true,
 	},
 	filters = {
-		dotfiles = true,
+		dotfiles = false,
 	},
 })
+-- compe (used mainly for autoimport)
+-- https://github.com/hrsh7th/nvim-compe
+require('compe').setup {}
+
 
 -- Formatter
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
@@ -533,18 +540,15 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettier.with({
 			filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html",
 				"json", "jsonc", "yaml", "markdown", "graphql", "handlebars", "svelte" },
-			only_local = "node_modules/.bin",
+			-- only_local = "node_modules/.bin",
 		}),
+		null_ls.builtins.formatting.prettierd,
 		null_ls.builtins.formatting.goimports,
 		null_ls.builtins.formatting.dart_format,
 	},
 	on_attach = on_attach,
 	debug = true,
 })
-
--- compe (used mainly for autoimport)
--- https://github.com/hrsh7th/nvim-compe
-require('compe').setup {}
 
 -- Packer compile
 vim.api.nvim_command(':PackerCompile')
