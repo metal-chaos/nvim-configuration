@@ -128,6 +128,15 @@ require('packer').startup(function(use)
 		end
 	})
 
+	-- Comment out
+	-- https://github.com/terrortylor/nvim-comment
+	use({
+		"terrortylor/nvim-comment",
+		config = function()
+			require("nvim_comment").setup({})
+		end
+	})
+
 	if vim.g.vscode then return nil end
 
 	--- Colorscheme
