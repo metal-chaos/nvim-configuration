@@ -36,7 +36,7 @@ vim.keymap.set('n', '<Leader>bq', '<cmd>b#<cr><cmd>bd#<cr>')
 vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
 vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
-vim.keymap.set('n', "<Leader>k", "<C-w>h<cr>")
+vim.keymap.set('n', "<Leader>k", "<C-w>k<cr>")
 
 --- LSP
 vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
@@ -510,6 +510,9 @@ require("nvim-tree").setup({
 -- https://github.com/hrsh7th/nvim-compe
 require('compe').setup {}
 
+-- go.nvim
+-- https://github.com/ray-x/go.nvim
+require('go').setup()
 
 -- Formatter
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
@@ -561,7 +564,3 @@ null_ls.setup({
 
 -- Packer compile
 vim.api.nvim_command(':PackerCompile')
-
--- go.nvim
--- https://github.com/ray-x/go.nvim
-require('go').setup()
