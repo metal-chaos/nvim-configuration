@@ -69,8 +69,12 @@ vim.keymap.set('n', '<Leader>gn', '<cmd>:Neogit<cr>')
 vim.keymap.set('n', '<Leader>gv', '<cmd>GitConflictListQf<CR>')
 
 vim.keymap.set('n', '<Leader>;c', '<cmd>GoCmt<CR>')
-vim.keymap.set('n', '<Leader>;a', '<cmd>GoAddTag<CR>')
-vim.keymap.set('n', '<Leader>;r', '<cmd>GoRmTag<CR>')
+vim.keymap.set('n', '<Leader>;aj', '<cmd>GoAddTag json<CR>')
+vim.keymap.set('n', '<Leader>;ad', '<cmd>GoAddTag db<CR>')
+vim.keymap.set('n', '<Leader>;ax', '<cmd>GoAddTag xml<CR>')
+vim.keymap.set('n', '<Leader>;rj', '<cmd>GoRmTag json<CR>')
+vim.keymap.set('n', '<Leader>;rd', '<cmd>GoRmTag db<CR>')
+vim.keymap.set('n', '<Leader>;rx', '<cmd>GoRmTag xml<CR>')
 vim.keymap.set('n', '<Leader>;t', '<cmd>GoTest -n<CR>')
 vim.keymap.set('n', '<Leader>;e', '<cmd>GoIfErr<CR>')
 vim.keymap.set('n', '<Leader>;i', '<cmd>GoImport<CR>')
@@ -121,6 +125,7 @@ require('packer').startup(function(use)
 	--- https://github.com/kylechui/nvim-surround
 	use({
 		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 		config = function()
 			require("nvim-surround").setup({
 				-- Configuration here, or leave empty to use defaults
