@@ -59,7 +59,7 @@ vim.keymap.set('n', '<Leader>eh', '<cmd>:Lspsaga diagnostic_jump_prev<CR>')
 --- Telescope
 vim.keymap.set('n', '<Leader>p', '<cmd>Telescope find_files hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>f', '<cmd>Telescope live_grep hidden=true theme=get_ivy<CR>')
-vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers hidden=true theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>bf', '<cmd>Telescope buffers hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>H', '<cmd>Telescope oldfiles hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>gb', '<cmd>Telescope git_branches theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
@@ -87,6 +87,9 @@ vim.keymap.set('n', '<Leader>mi', '<cmd>:PackerInstall<cr>')
 vim.keymap.set('n', '<Leader>mu', '<cmd>:PackerUpdate<cr>')
 vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerSync<cr>')
 vim.keymap.set('n', '<Leader>mc', '<cmd>:PackerCompile<cr>')
+
+--- treesitter
+vim.keymap.set('n', '<Leader>vu', '<cmd>:TSUpdate all<cr>')
 
 --- File explorer
 vim.keymap.set('n', '<Leader>F', '<cmd>:NvimTreeFindFile<cr>')
