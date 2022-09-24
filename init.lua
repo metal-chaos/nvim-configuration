@@ -75,6 +75,7 @@ vim.keymap.set('n', '<Leader>;ax', '<cmd>GoAddTag xml<CR>')
 vim.keymap.set('n', '<Leader>;rj', '<cmd>GoRmTag json<CR>')
 vim.keymap.set('n', '<Leader>;rd', '<cmd>GoRmTag db<CR>')
 vim.keymap.set('n', '<Leader>;rx', '<cmd>GoRmTag xml<CR>')
+-- https://github.com/ray-x/go.nvim#unit-test-with-gotests-and-testify
 vim.keymap.set('n', '<Leader>;t', '<cmd>GoTestFunc<CR>')
 vim.keymap.set('n', '<Leader>;e', '<cmd>GoIfErr<CR>')
 vim.keymap.set('n', '<Leader>;i', '<cmd>GoImport<CR>')
