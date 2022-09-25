@@ -37,7 +37,7 @@ vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
 vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 vim.keymap.set('n', "<Leader>k", "<C-w>k<cr>")
-vim.keymap.set('n', "<Leader>mm", "<C-w>j<cr>")
+vim.keymap.set('n', "<Leader>mm", "<C-w>~@k<cr>")
 
 --- LSP
 vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
@@ -572,12 +572,11 @@ end
 local null_ls = require("null-ls")
 null_ls.setup({
 	sources = {
-		null_ls.builtins.formatting.prettier.with({
+		null_ls.builtins.formatting.prettierd.with({
 			filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html",
 				"json", "jsonc", "yaml", "markdown", "graphql", "handlebars", "svelte" },
 			-- only_local = "node_modules/.bin",
 		}),
-		null_ls.builtins.formatting.prettierd,
 		null_ls.builtins.formatting.goimports,
 		null_ls.builtins.formatting.dart_format,
 	},
