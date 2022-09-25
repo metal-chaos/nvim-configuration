@@ -36,8 +36,8 @@ vim.keymap.set('n', '<Leader>bq', '<cmd>b#<cr><cmd>bd#<cr>')
 vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
 vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
-vim.keymap.set('n', "<Leader>k", "<C-w>k<cr>")
-vim.keymap.set('n', "<Leader>mm", "<C-w>~@k<cr>")
+vim.keymap.set('n', "<Leader>mk", "<C-w>k<cr>")
+vim.keymap.set('n', "<Leader>mm", "<C-w>j<cr>")
 
 --- LSP
 vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
@@ -276,6 +276,8 @@ require('packer').startup(function(use)
 		config = function()
 			require("trouble").setup {
 				-- your configuration comes here
+				auto_open = true,
+				auto_close = true,
 			}
 		end
 	}
