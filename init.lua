@@ -37,6 +37,7 @@ vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
 vim.keymap.set('n', "<Leader>l", "<C-w>l<cr>")
 vim.keymap.set('n', "<Leader>h", "<C-w>h<cr>")
 vim.keymap.set('n', "<Leader>k", "<C-w>k<cr>")
+vim.keymap.set('n', "<Leader>mm", "<C-w>j<cr>")
 
 --- LSP
 vim.keymap.set('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
@@ -104,6 +105,19 @@ vim.api.nvim_create_user_command("Cppath", function()
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
+
+-- LSP handlers
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+	vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
+)
+
+-- Store the cursor point at last
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+	pattern = { "*" },
+	callback = function()
+		vim.api.nvim_exec('silent! normal! g`"zv', false)
+	end,
+})
 
 vim.cmd [[packadd packer.nvim]]
 vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
