@@ -153,6 +153,11 @@ require('packer').startup(function(use)
 
 	-- Comment out
 	-- https://github.com/terrortylor/nvim-comment
+	-- gcip comment/uncomment a paragraph
+	-- gc4w comment/uncomment current line
+	-- gc4j comment/uncomment 4 lines below the current line
+	-- dic delete comment block
+	-- gcic uncomment commented block
 	use({
 		"terrortylor/nvim-comment",
 		config = function()
@@ -276,8 +281,9 @@ require('packer').startup(function(use)
 		config = function()
 			require("trouble").setup {
 				-- your configuration comes here
-				auto_open = true,
-				auto_close = true,
+				auto_open = false,
+				auto_close = false,
+				auto_preview = false,
 			}
 		end
 	}
@@ -559,6 +565,9 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 -- add to your shared on_attach callback
 local on_attach = function(client, bufnr)
+	if client.supports_method("textDocument/didOpen") == "php" then
+		return
+	end
 	if client.supports_method("textDocument/formatting") then
 		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -576,7 +585,7 @@ null_ls.setup({
 	sources = {
 		null_ls.builtins.formatting.prettierd.with({
 			filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html",
-				"json", "jsonc", "yaml", "markdown", "graphql", "handlebars", "svelte" },
+				"json", "jsonc", "yaml", "markdown", "graphql", "handlebars", "svelte", "php" },
 			-- only_local = "node_modules/.bin",
 		}),
 		null_ls.builtins.formatting.goimports,
