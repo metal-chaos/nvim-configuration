@@ -398,23 +398,6 @@ require('mason-lspconfig').setup_handlers({
     end
 })
 
--- TODO: This might be fine to delete the following code
--- 2. build-in LSP function
--- keyboard shortcut
--- LSP handlers
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
--- 	vim.lsp.diagnostic.on_publish_diagnostics,
--- 	{
--- 		virtual_text = false,
--- 		signs = false,
--- 		update_in_insert = false,
--- 		underline = true,
--- 		open = false,
--- 	},
--- 	vim.diagnostic.config({ virtual_text = false }),
--- 	vim.diagnostic.setqflist({ open = false })
--- )
-
 -- Reference highlight
 vim.cmd [[
 highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
