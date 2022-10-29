@@ -379,7 +379,7 @@ require('mason-lspconfig').setup_handlers({
             on_attach = function(client)
                 -- TODO: I think the next code would be fixed
                 -- Find the clients capabilities
-                local cap = client.resolved_capabilities
+                local cap = client.server_capabilities
 
                 -- Only highlight if compatible with the language
                 if cap.document_highlight then
