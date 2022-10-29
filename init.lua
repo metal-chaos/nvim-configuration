@@ -106,11 +106,6 @@ vim.api.nvim_create_user_command("Cppath", function()
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
 
--- LSP handlers
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
-)
-
 -- Store the cursor point at last
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 	pattern = { "*" },
@@ -251,15 +246,15 @@ require('packer').startup(function(use)
 		end
 	}
 
-	use { 'kkharji/lspsaga.nvim' }
-
-	use({
-		'ray-x/navigator.lua',
-		requires = { {
-			'ray-x/guihua.lua',
-			run = 'cd lua/fzy && make'
-		}, { 'neovim/nvim-lspconfig' } }
-	})
+	-- TODO: こいつを使用するとdiagnosticのbufferが勝手に開く
+	-- めちゃくちゃむかついた
+	-- use({
+	-- 	'ray-x/navigator.lua',
+	-- 	requires = { {
+	-- 		'ray-x/guihua.lua',
+	-- 		run = 'cd lua/fzy && make'
+	-- 	}, { 'neovim/nvim-lspconfig' } }
+	-- })
 
 	use {
 		"folke/todo-comments.nvim",
@@ -281,9 +276,9 @@ require('packer').startup(function(use)
 		config = function()
 			require("trouble").setup {
 				-- your configuration comes here
-				auto_open = false,
-				auto_close = false,
-				auto_preview = false,
+				auto_open = true,
+				auto_close = true,
+				auto_preview = true,
 			}
 		end
 	}
@@ -404,16 +399,42 @@ require('mason-lspconfig').setup_handlers({ function(server)
 		on_attach = function(client)
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
-		end
+		end,
+		handlers = {
+			-- TODO: diagnostic configuration
+			-- https://neovim.io/doc/user/lsp.html#lsp-api
+			["textDocument/publishDiagnostics"] = vim.lsp.with(
+				vim.lsp.diagnostic.on_publish_diagnostics, {
+				-- Disable virtual_text
+				virtual_text = true,
+				signs = true,
+				update_in_insert = true,
+				underline = true,
+				open = false,
+			}
+			),
+		}
 	})
 end })
 
+-- TODO: This might be fine to delete the following code
 -- 2. build-in LSP function
 -- keyboard shortcut
 -- LSP handlers
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	virtual_text = false
-})
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+-- 	vim.lsp.diagnostic.on_publish_diagnostics,
+-- 	{
+-- 		virtual_text = false,
+-- 		signs = false,
+-- 		update_in_insert = false,
+-- 		underline = true,
+-- 		open = false,
+-- 	},
+-- 	vim.diagnostic.config({ virtual_text = false }),
+-- 	vim.diagnostic.setqflist({ open = false })
+-- )
+
+
 -- Reference highlight
 vim.cmd [[
 highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
@@ -484,11 +505,7 @@ require("fidget").setup {}
 require('lualine').setup()
 
 -- https://github.com/kkharji/lspsaga.nvim
-require('lspsaga').setup {}
-
--- https://github.com/ray-x/navigator.lua
-require 'navigator'.setup({
-})
+-- require('lspsaga').setup {}
 
 -- Indent configuration
 -- https://github.com/lukas-reineke/indent-blankline.nvim
