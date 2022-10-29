@@ -374,7 +374,25 @@ require('mason').setup()
 require('mason-lspconfig').setup_handlers({
     function(server)
         require('lspconfig')[server].setup({
+            -- TODO: See the following code
+            -- https://github.com/ray-x/navigator.lua/blob/c583e1a69d3685983da48fa085e52b2e549053b8/lua/navigator/dochighlight.lua#L222-L232
             on_attach = function(client)
+                -- TODO: I think the next code would be fixed
+                -- Find the clients capabilities
+                local cap = client.resolved_capabilities
+
+                -- Only highlight if compatible with the language
+                if cap.document_highlight then
+                    vim.cmd('augroup LspHighlight')
+                    vim.cmd('autocmd!')
+                    vim.cmd(
+                        'autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()')
+                    vim.cmd(
+                        'autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()')
+                    vim.cmd('augroup END')
+                end
+
+                -- Disable formatting
                 client.server_capabilities.documentFormattingProvider = false
                 client.server_capabilities.documentRangeFormattingProvider =
                     false
