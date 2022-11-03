@@ -165,7 +165,6 @@ require('packer').startup(function(use)
 
     --- Colorscheme
     use 'tiagovla/tokyodark.nvim'
-    use "itchyny/lightline.vim"
     use 'nvim-treesitter/nvim-treesitter'
     use 'norcalli/nvim-colorizer.lua'
 
@@ -446,7 +445,7 @@ cmp.setup({
 })
 
 -- Color Scheme
-vim.g.tokyodark_transparent_background = false
+vim.g.tokyodark_transparent_background = true
 vim.g.tokyodark_enable_italic_comment = true
 vim.g.tokyodark_enable_italic = false
 vim.g.tokyodark_color_gamma = "0.8"
@@ -498,7 +497,7 @@ require("indent_blankline").setup {
     }
 }
 
-require("scrollbar").setup()
+require("scrollbar").setup({handle = {color = "#2fe0c5"}})
 
 -- File explorer
 -- https://github.com/kyazdani42/nvim-tree.lua
@@ -573,6 +572,5 @@ null_ls.setup({
     on_attach = on_attach,
     debug = true
 })
-
 -- Packer compile
 vim.api.nvim_command(':PackerCompile')
