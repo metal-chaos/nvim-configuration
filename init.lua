@@ -268,7 +268,26 @@ require('packer').startup(function(use)
         end
     }
 
-    use("petertriho/nvim-scrollbar")
+    -- INFO: Refactoring plugin
+    -- TODO: Modify null-ls
+    -- -- Refactoring
+    -- -- https://github.com/ThePrimeagen/refactoring.nvim
+    -- use {
+    --     "ThePrimeagen/refactoring.nvim",
+    --     requires = {
+    --         {"nvim-lua/plenary.nvim"}, {"nvim-treesitter/nvim-treesitter"}
+    --     }
+    -- }
+
+    use {
+        "petertriho/nvim-scrollbar",
+        requires = "kevinhwang91/nvim-hlslens",
+        config = function()
+            require("scrollbar").setup({handle = {color = "#2fe0c5"}})
+            -- INFO: Highlight matched strings
+            require("scrollbar.handlers.search").setup()
+        end
+    }
 
     --- Modern Go plugin
     --- https://github.com/ray-x/go.nvim
@@ -373,24 +392,7 @@ require('mason').setup()
 require('mason-lspconfig').setup_handlers({
     function(server)
         require('lspconfig')[server].setup({
-            -- TODO: See the following code
-            -- https://github.com/ray-x/navigator.lua/blob/c583e1a69d3685983da48fa085e52b2e549053b8/lua/navigator/dochighlight.lua#L222-L232
             on_attach = function(client)
-                -- TODO: I think the next code would be fixed
-                -- Find the clients capabilities
-                local cap = client.server_capabilities
-
-                -- Only highlight if compatible with the language
-                if cap.document_highlight then
-                    vim.cmd('augroup LspHighlight')
-                    vim.cmd('autocmd!')
-                    vim.cmd(
-                        'autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()')
-                    vim.cmd(
-                        'autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()')
-                    vim.cmd('augroup END')
-                end
-
                 -- Disable formatting
                 client.server_capabilities.documentFormattingProvider = false
                 client.server_capabilities.documentRangeFormattingProvider =
@@ -415,17 +417,18 @@ require('mason-lspconfig').setup_handlers({
     end
 })
 
--- Reference highlight
-vim.cmd [[
-highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
-highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
-highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
-augroup lsp_document_highlight
-  autocmd!
-  autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.document_highlight()
-  autocmd CursorMoved,CursorMovedI * lua vim.lsp.buf.clear_references()
-augroup END
-]]
+-- INFO: Commented out temporarily to stop errors
+-- -- Reference highlight
+-- vim.cmd [[
+-- highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+-- highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+-- highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+-- augroup lsp_document_highlight
+--   autocmd!
+--   autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.document_highlight()
+--   autocmd CursorMoved,CursorMovedI * lua vim.lsp.buf.clear_references()
+-- augroup END
+-- ]]
 
 -- 最後に追加
 vim.opt.completeopt = "menu,menuone,noselect"
@@ -497,8 +500,6 @@ require("indent_blankline").setup {
     }
 }
 
-require("scrollbar").setup({handle = {color = "#2fe0c5"}})
-
 -- File explorer
 -- https://github.com/kyazdani42/nvim-tree.lua
 require("nvim-tree").setup({
@@ -549,7 +550,11 @@ local on_attach = function(client, bufnr)
     end
 end
 
--- INFO: There was a possibility that didn't work well before by using ray-x/navigator.lua
+-- INFO:
+-- Language server list
+-- GO: gopls
+-- Typescript: typescript-language-server
+-- PHP: phpactor
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
