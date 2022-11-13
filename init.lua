@@ -126,6 +126,7 @@ require('packer').startup(function(use)
     use 'tpope/vim-fugitive'
     use 'tpope/vim-repeat'
     use 'neovim/nvim-lspconfig'
+
     --- LSP
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
@@ -412,7 +413,8 @@ require('mason-lspconfig').setup_handlers({
                     underline = true,
                     open = false
                 })
-            }
+            },
+            settings = {Lua = {diagnostics = {globals = {'vim'}}}}
         })
     end
 })
