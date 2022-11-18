@@ -24,7 +24,8 @@ vim.keymap.set('n', '<Leader>Q', '<cmd>:q!<cr>')
 vim.keymap.set('n', '<Leader>w', '<cmd>:w<cr>')
 vim.keymap.set('n', '<Leader>wq', '<cmd>:wq<cr>')
 vim.keymap.set('n', '<Leader>i', '<cmd>tabnew<cr>')
-vim.keymap.set('n', '<Leader>cc', '<cmd>Cppath<cr>')
+vim.keymap.set('n', '<Leader>cc', '<cmd>CpPath<cr>')
+vim.keymap.set('n', '<Leader>cf', '<cmd>CpFileName<cr>')
 
 -- buffers
 vim.keymap.set('n', '<Leader>ls', '<cmd>:ls<cr>')
@@ -99,14 +100,21 @@ vim.keymap.set('n', '<Leader>mc', '<cmd>:PackerCompile<cr>')
 vim.keymap.set('n', '<Leader>vu', '<cmd>:TSUpdate all<cr>')
 
 --- File explorer
-vim.keymap.set('n', '<Leader>F', '<cmd>:NvimTreeFindFile<cr>')
+vim.keymap.set('n', 'F', '<cmd>:NvimTreeFindFile<cr>')
 
 --- Trouble
 vim.keymap.set('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
 
--- New commands
-vim.api.nvim_create_user_command("Cppath", function()
+-- Copy path name
+vim.api.nvim_create_user_command("CpPath", function()
     local path = vim.fn.expand('%')
+    vim.fn.setreg("+", path)
+    vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
+
+-- Copy file name
+vim.api.nvim_create_user_command("CpFileName", function()
+    local path = vim.fn.expand('%:t')
     vim.fn.setreg("+", path)
     vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
