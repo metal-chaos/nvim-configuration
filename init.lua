@@ -105,6 +105,16 @@ vim.keymap.set('n', 'F', '<cmd>:NvimTreeFindFile<cr>')
 --- Trouble
 vim.keymap.set('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
 
+--- Substitution
+vim.keymap.set("n", "<leader>jj", "<cmd>lua require('substitute').line()<cr>",
+               {noremap = true})
+vim.keymap.set("n", "<leader>je", "<cmd>lua require('substitute').eol()<cr>",
+               {noremap = true})
+vim.keymap.set("n", "<leader>jf",
+               "<cmd>lua require('substitute.range').operator()<cr>",
+               {noremap = true})
+vim.keymap.set('n', '<Leader>jk', '<cmd>SubClipboard<cr>')
+
 -- Copy path name
 vim.api.nvim_create_user_command("CpPath", function()
     local path = vim.fn.expand('%')
@@ -117,6 +127,14 @@ vim.api.nvim_create_user_command("CpFileName", function()
     local path = vim.fn.expand('%:t')
     vim.fn.setreg("+", path)
     vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
+
+-- Clipboard substitution
+vim.api.nvim_create_user_command("SubClipboard", function()
+    local text = vim.fn.input("Input replacing text:")
+    local clipboard = vim.fn.getreg('*')
+    vim.fn.execute(':%s/' .. clipboard .. '/' .. text .. '/g')
+    vim.notify('Substituted with "' .. text .. '"!')
 end, {})
 
 -- Store the cursor point at last
@@ -325,6 +343,13 @@ require('packer').startup(function(use)
                 -- your configuration
             })
         end
+    })
+
+    -- https://github.com/gbprod/substitute.nvim
+    -- Plugin for substitution
+    use({
+        "gbprod/substitute.nvim",
+        config = function() require("substitute").setup({}) end
     })
 
     -- TODO: Temporarily deleted
@@ -572,8 +597,7 @@ null_ls.setup({
             filetypes = {
                 "javascript", "javascriptreact", "typescript",
                 "typescriptreact", "vue", "css", "scss", "less", "html", "json",
-                "jsonc", "yaml", "markdown", "graphql", "handlebars", "svelte",
-                "php"
+                "jsonc", "markdown", "graphql", "handlebars", "svelte", "php"
             }
             -- only_local = "node_modules/.bin",
         }), null_ls.builtins.formatting.goimports,
