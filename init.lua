@@ -67,9 +67,18 @@ vim.keymap.set('n', '<Leader>bf',
                '<cmd>Telescope buffers hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>H',
                '<cmd>Telescope oldfiles hidden=true theme=get_ivy<CR>')
+vim.keymap.set('n', '<Leader>hh',
+               "<cmd>Telescope search_history hidden=true theme=get_ivy<CR>")
+vim.keymap.set('n', '<Leader>hs',
+               "<cmd>Telescope spell_suggest hidden=true theme=get_ivy<CR>")
+vim.keymap.set('n', '<Leader>ha',
+               "<cmd>Telescope resume hidden=true theme=get_ivy<CR>")
+vim.keymap.set('n', '<Leader>hd',
+               "<cmd>Telescope pickers hidden=true theme=get_ivy<CR>")
 vim.keymap.set('n', '<Leader>gb',
                '<cmd>Telescope git_branches theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
+
 --- neogit
 vim.keymap.set('n', '<Leader>gn', '<cmd>:Neogit<cr>')
 -- git-conflict
