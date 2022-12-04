@@ -124,6 +124,9 @@ vim.keymap.set("n", "<leader>jf",
                {noremap = true})
 vim.keymap.set('n', '<Leader>jk', '<cmd>SubClipboard<cr>')
 
+--- Execute a nearest test
+vim.keymap.set("n", "<leader>;j", "<cmd>lua require('neotest').run.run()<cr>")
+
 -- Copy path name
 vim.api.nvim_create_user_command("CpPath", function()
     local path = vim.fn.expand('%')
@@ -360,6 +363,32 @@ require('packer').startup(function(use)
         "gbprod/substitute.nvim",
         config = function() require("substitute").setup({}) end
     })
+
+    -- https://github.com/Eandrju/cellular-automaton.nvim
+    -- :CellularAutomaton make_it_rain
+    -- :CellularAutomaton game_of_life
+    use 'eandrju/cellular-automaton.nvim'
+
+    -- https://github.com/nvim-neotest/neotest
+    -- Plugin for executing tests
+    use {
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim", 'olimorris/neotest-phpunit'
+        },
+        config = function()
+            require('neotest').setup({
+                adapters = {
+                    require('neotest-phpunit')({
+                        phpunit_cmd = function()
+                            return "vendor/bin/phpunit"
+                        end
+                    })
+                }
+            })
+        end
+    }
 
     -- TODO: Temporarily deleted
     --	use { 'akinsho/git-conflict.nvim', tag = "*", config = function()
@@ -613,6 +642,7 @@ null_ls.setup({
         null_ls.builtins.formatting.dart_format,
         null_ls.builtins.formatting.gofmt,
         null_ls.builtins.formatting.lua_format,
+        -- null_ls.builtins.formatting.phpcsfixer,
         null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.luacheck,
         null_ls.builtins.diagnostics.staticcheck
