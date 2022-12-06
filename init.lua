@@ -127,6 +127,11 @@ vim.keymap.set('n', '<Leader>jk', '<cmd>SubClipboard<cr>')
 --- Execute a nearest test
 vim.keymap.set("n", "<leader>;j", "<cmd>lua require('neotest').run.run()<cr>")
 
+--- Github copilot
+-- https://rcmdnk.com/blog/2022/09/28/computer-vim/
+vim.keymap.set("n", "<C-]>", "<Plug>(copilot-next)")
+vim.keymap.set("n", "<C-[>", "<Plug>(copilot-previous)")
+
 -- Copy path name
 vim.api.nvim_create_user_command("CpPath", function()
     local path = vim.fn.expand('%')
@@ -362,6 +367,15 @@ require('packer').startup(function(use)
     use({
         "gbprod/substitute.nvim",
         config = function() require("substitute").setup({}) end
+    })
+
+    -- https://github.com/chentoast/marks.nvim
+    -- Mappings link
+    -- https://github.com/chentoast/marks.nvim#mappings
+    -- Plugin for marks
+    use({
+        "chentoast/marks.nvim",
+        config = function() require("marks").setup({}) end
     })
 
     -- https://github.com/Eandrju/cellular-automaton.nvim
