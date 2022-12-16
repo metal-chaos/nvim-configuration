@@ -211,6 +211,7 @@ require('packer').startup(function(use)
     use 'tiagovla/tokyodark.nvim'
     use 'nvim-treesitter/nvim-treesitter'
     use 'norcalli/nvim-colorizer.lua'
+    use 'navarasu/onedark.nvim'
 
     --- buffer line
     use {
@@ -362,6 +363,17 @@ require('packer').startup(function(use)
         end
     })
 
+    -- ChatGPT
+    -- https://github.com/jackMort/ChatGPT.nvim
+    use({
+        "jackMort/ChatGPT.nvim",
+        config = function() require("chatgpt").setup({}) end,
+        requires = {
+            "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
+    })
+
     -- https://github.com/gbprod/substitute.nvim
     -- Plugin for substitution
     use({
@@ -403,11 +415,6 @@ require('packer').startup(function(use)
             })
         end
     }
-
-    -- TODO: Temporarily deleted
-    --	use { 'akinsho/git-conflict.nvim', tag = "*", config = function()
-    --		require('git-conflict').setup()
-    --	end }
 
     -- opt オプションを付けると遅延読み込みになります。
     -- この場合は opt だけで読み込む契機を指定していないため、
@@ -499,23 +506,10 @@ require('mason-lspconfig').setup_handlers({
                     open = false
                 })
             },
-            settings = {Lua = {diagnostics = {globals = {'vim'}}}}
+            settings = {Lua = {diagnostics = {globals = {"vim"}}}}
         })
     end
 })
-
--- INFO: Commented out temporarily to stop errors
--- -- Reference highlight
--- vim.cmd [[
--- highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
--- highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
--- highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
--- augroup lsp_document_highlight
---   autocmd!
---   autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.document_highlight()
---   autocmd CursorMoved,CursorMovedI * lua vim.lsp.buf.clear_references()
--- augroup END
--- ]]
 
 -- 最後に追加
 vim.opt.completeopt = "menu,menuone,noselect"
@@ -538,16 +532,16 @@ cmp.setup({
 vim.g.tokyodark_transparent_background = false
 vim.g.tokyodark_enable_italic_comment = true
 vim.g.tokyodark_enable_italic = false
-vim.g.tokyodark_color_gamma = "0.8"
-vim.cmd("colorscheme tokyodark")
+vim.g.tokyodark_color_gamma = "0.9"
+-- vim.cmd("colorscheme tokyodark")
+
+require('onedark').setup {style = 'deep'}
+require('onedark').load()
 
 -- Code highlighter
 require('nvim-treesitter.configs').setup {
     highlight = {
-        enable = true, -- syntax highlightを有効にする
-        disable = { -- 一部の言語では無効にする
-            'toml'
-        }
+        enable = true -- syntax highlightを有効にする
     },
     ensure_installed = 'all', -- :TSInstall allと同じ
     ignore_install = {"phpdoc"}
@@ -610,7 +604,6 @@ require('go').setup()
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
 -- https://zenn.dev/nazo6/articles/c2f16b07798bab
 -- Maybe this way? -> https://github.com/jose-elias-alvarez/null-ls.nvim/issues/844
--- INFO: Worked well when moving null-ls to the bottom
 local lsp_formatting = function(bufnr)
     vim.lsp.buf.format({
         filter = function(client)
@@ -641,22 +634,20 @@ end
 -- Language server list
 -- GO: gopls
 -- Typescript: typescript-language-server
--- PHP: phpactor
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
+        null_ls.builtins.formatting.rustfmt.with({filetypes = {"rust"}}),
         null_ls.builtins.formatting.prettierd.with({
             filetypes = {
                 "javascript", "javascriptreact", "typescript",
                 "typescriptreact", "vue", "css", "scss", "less", "html", "json",
                 "jsonc", "markdown", "graphql", "handlebars", "svelte", "php"
             }
-            -- only_local = "node_modules/.bin",
         }), null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.dart_format,
         null_ls.builtins.formatting.gofmt,
         null_ls.builtins.formatting.lua_format,
-        -- null_ls.builtins.formatting.phpcsfixer,
         null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.luacheck,
         null_ls.builtins.diagnostics.staticcheck
