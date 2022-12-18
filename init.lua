@@ -132,6 +132,12 @@ vim.keymap.set("n", "<leader>;j", "<cmd>lua require('neotest').run.run()<cr>")
 vim.keymap.set("n", "<C-]>", "<Plug>(copilot-next)")
 vim.keymap.set("n", "<C-[>", "<Plug>(copilot-previous)")
 
+-- ChatGPT
+-- https://github.com/jackMort/ChatGPT.nvim
+vim.keymap.set('n', '<Leader>tk', '<cmd>:ChatGPT<cr>')
+vim.keymap.set('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>')
+vim.keymap.set('n', '<Leader>tt', '<cmd>:ChatGPTEditWithInstructions<cr>')
+
 -- Copy path name
 vim.api.nvim_create_user_command("CpPath", function()
     local path = vim.fn.expand('%')
