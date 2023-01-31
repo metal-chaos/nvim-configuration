@@ -240,7 +240,7 @@ require('packer').startup(function(use)
         defaults = {
             vimgrep_arguments = {
                 'rg', '--color=never', '--no-heading', '--with-filename',
-                '--line-number', '--column', '--smart-case', '-u'
+                '--line-number', '--column', '--smart-case', '--ignore'
             }
         }
     }
@@ -337,6 +337,15 @@ require('packer').startup(function(use)
             require("scrollbar").setup({handle = {color = "#2fe0c5"}})
             -- INFO: Highlight matched strings
             require("scrollbar.handlers.search").setup()
+        end
+    }
+
+    -- Neoscroll: a smooth scrolling neovim plugin written in lua
+    -- https://github.com/karb94/neoscroll.nvim
+    use {
+        "karb94/neoscroll.nvim",
+        config = function()
+            require("neoscroll").setup({easing_function = "quadratic"})
         end
     }
 
@@ -644,11 +653,12 @@ local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
         null_ls.builtins.formatting.rustfmt.with({filetypes = {"rust"}}),
-        null_ls.builtins.formatting.prettierd.with({
+        null_ls.builtins.formatting.prettier.with({
             filetypes = {
                 "javascript", "javascriptreact", "typescript",
-                "typescriptreact", "vue", "css", "scss", "less", "html", "json",
-                "jsonc", "markdown", "graphql", "handlebars", "svelte", "php"
+                "typescriptreact", "vue", "css", "scss", "less", "json",
+                "jsonc", "markdown", "graphql", "handlebars", "svelte", "php",
+                "html"
             }
         }), null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.dart_format,
