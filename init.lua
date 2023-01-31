@@ -431,6 +431,13 @@ require('packer').startup(function(use)
         end
     }
 
+    -- impatient.nvim: Speed up loading Lua modules in Neovim to improve startup time.
+    -- https://github.com/lewis6991/impatient.nvim
+    use {
+        "lewis6991/impatient.nvim",
+        config = function() require("impatient") end
+    }
+
     -- opt オプションを付けると遅延読み込みになります。
     -- この場合は opt だけで読み込む契機を指定していないため、
     -- `packadd` コマンドを叩かない限り読み込まれることはありません。
