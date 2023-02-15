@@ -427,6 +427,19 @@ require('packer').startup(function(use)
         end
     }
 
+    -- Dashboard theme
+    -- https://github.com/glepnir/dashboard-nvim
+    use {
+        'glepnir/dashboard-nvim',
+        event = 'VimEnter',
+        config = function()
+            require('dashboard').setup {
+                -- config
+            }
+        end,
+        requires = {'nvim-tree/nvim-web-devicons'}
+    }
+
     -- impatient.nvim: Speed up loading Lua modules in Neovim to improve startup time.
     -- https://github.com/lewis6991/impatient.nvim
     use {
@@ -574,7 +587,7 @@ require('colorizer').setup()
 require("fidget").setup {}
 
 -- lualine
-require('lualine').setup()
+require('lualine').setup({options = {theme = 'horizon'}})
 
 -- Indent configuration
 -- https://github.com/lukas-reineke/indent-blankline.nvim
