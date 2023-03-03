@@ -79,6 +79,18 @@ vim.keymap.set('n', '<Leader>gb',
                '<cmd>Telescope git_branches theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>gs', '<cmd>Telescope git_status theme=get_ivy<CR>')
 
+-- text-case.nvim
+vim.keymap.set('n', 'gau',
+               "<cmd>:lua require('textcase').current_word('to_upper_case')<CR>")
+vim.keymap.set('n', 'gal',
+               "<cmd>:lua require('textcase').current_word('to_lower_case')<CR>")
+vim.keymap.set('n', 'gas',
+               "<cmd>:lua require('textcase').current_word('to_snake_case')<CR>")
+vim.keymap.set('n', 'gac',
+               "<cmd>:lua require('textcase').current_word('to_camel_case')<CR>")
+vim.keymap.set('n', 'gap',
+               "<cmd>:lua require('textcase').current_word('to_pascal_case')<CR>")
+
 --- neogit
 vim.keymap.set('n', '<Leader>gn', '<cmd>:Neogit<cr>')
 -- git-conflict
@@ -449,7 +461,7 @@ require('packer').startup(function(use)
 
     -- Noice
     -- Customize here if bothersome notification appeared
-    -- https://github.com/folke/noice.nvim
+    -- @see https://github.com/folke/noice.nvim
     use({
         "folke/noice.nvim",
         config = function()
@@ -480,6 +492,15 @@ require('packer').startup(function(use)
             "rcarriga/nvim-notify"
         }
     })
+
+    -- text-case.nvim
+    -- There are methods that convert a specific text to the specified case
+    -- Example: Upper case, Lower case, Snake case and Camel case
+    -- @see https://github.com/johmsalas/text-case.nvim
+    use {
+        "johmsalas/text-case.nvim",
+        config = function() require('textcase').setup {} end
+    }
 
     -- opt オプションを付けると遅延読み込みになります。
     -- この場合は opt だけで読み込む契機を指定していないため、
