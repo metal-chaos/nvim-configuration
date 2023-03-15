@@ -29,9 +29,24 @@ vim.keymap.set('n', '<Leader>cf', '<cmd>CpFileName<cr>')
 
 -- buffers
 vim.keymap.set('n', '<Leader>ls', '<cmd>:ls<cr>')
-vim.keymap.set('n', '<C-l>', '<cmd>bnext<cr>')
-vim.keymap.set('n', '<C-h>', '<cmd>bprevious<cr>')
 vim.keymap.set('n', '<Leader>bq', '<cmd>b#<cr><cmd>bd#<cr>')
+
+-- buffer line
+vim.keymap.set('n', '<C-l>', '<cmd>BufferLineCycleNext<cr>')
+vim.keymap.set('n', '<C-h>', '<cmd>BufferLineCyclePrev<cr>')
+vim.keymap.set('n', '<C-p>', '<cmd>BufferLineTogglePin<cr>')
+vim.keymap.set('n', '<C-i>', '<cmd>BufferLinePick<cr>')
+vim.keymap.set('n', '<C-k>', '<cmd>BufferLineMoveNext<cr>')
+vim.keymap.set('n', '<C-j>', '<cmd>BufferLineMovePrev<cr>')
+vim.keymap.set('n', '<Leader>1', '<cmd>BufferLineGoToBuffer 1<cr>')
+vim.keymap.set('n', '<Leader>2', '<cmd>BufferLineGoToBuffer 2<cr>')
+vim.keymap.set('n', '<Leader>3', '<cmd>BufferLineGoToBuffer 3<cr>')
+vim.keymap.set('n', '<Leader>4', '<cmd>BufferLineGoToBuffer 4<cr>')
+vim.keymap.set('n', '<Leader>5', '<cmd>BufferLineGoToBuffer 5<cr>')
+vim.keymap.set('n', '<Leader>6', '<cmd>BufferLineGoToBuffer 6<cr>')
+vim.keymap.set('n', '<Leader>7', '<cmd>BufferLineGoToBuffer 7<cr>')
+vim.keymap.set('n', '<Leader>8', '<cmd>BufferLineGoToBuffer 8<cr>')
+vim.keymap.set('n', '<Leader>9', '<cmd>BufferLineGoToBuffer -1<cr>')
 
 --- Split screen
 vim.keymap.set('n', "<Leader>t", "<C-w>v<cr>")
@@ -232,11 +247,17 @@ require('packer').startup(function(use)
     use 'navarasu/onedark.nvim'
 
     --- buffer line
+    -- See the following for more information
+    -- @see https://github.com/akinsho/bufferline.nvim/blob/main/doc/bufferline.txt
     use {
         'akinsho/nvim-bufferline.lua',
         requires = 'kyazdani42/nvim-web-devicons',
-        tag = "v2.*",
-        config = function() require("bufferline").setup {} end
+        tag = "v3.*",
+        config = function()
+            require("bufferline").setup {
+                options = {separator_style = "thick", diagnostics = "nvim_lsp"}
+            }
+        end
     }
 
     --- Cursor mover
