@@ -514,6 +514,15 @@ require('packer').startup(function(use)
         }
     })
 
+    -- easyread.nvim: bionic-like reading
+    -- @see https://github.com/JellyApple102/easyread.nvim
+    use {
+        'JellyApple102/easyread.nvim',
+        config = function()
+            require("easyread").setup({saccadeInterval = 2})
+        end
+    }
+
     -- text-case.nvim
     -- There are methods that convert a specific text to the specified case
     -- Example: Upper case, Lower case, Snake case and Camel case
