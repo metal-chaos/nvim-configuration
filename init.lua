@@ -77,7 +77,8 @@ vim.keymap.set('n', '<Leader>eh', '<cmd>:Lspsaga diagnostic_jump_prev<CR>')
 vim.keymap.set('n', '<Leader>p',
                '<cmd>Telescope find_files hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>f',
-               '<cmd>Telescope live_grep hidden=true theme=get_ivy<CR>')
+               '<cmd>Telescope lua require("telescope").extensions.live_grep_args.' ..
+                   'live_grep_args() hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>bf',
                '<cmd>Telescope buffers hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>H',
@@ -275,7 +276,14 @@ require('packer').startup(function(use)
                 'rg', '--color=never', '--no-heading', '--with-filename',
                 '--line-number', '--column', '--smart-case', '--ignore'
             }
-        }
+        },
+        -- Telescope live grep args
+        -- Search strings with filters such as a directory
+        -- @see https://github.com/nvim-telescope/telescope-live-grep-args.nvim
+        requires = {{"nvim-telescope/telescope-live-grep-args.nvim"}},
+        config = function()
+            require("telescope").load_extension("live_grep_args")
+        end
     }
 
     -- File explorer
