@@ -77,7 +77,7 @@ vim.keymap.set('n', '<Leader>eh', '<cmd>:Lspsaga diagnostic_jump_prev<CR>')
 vim.keymap.set('n', '<Leader>p',
                '<cmd>Telescope find_files hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>f',
-               '<cmd>Telescope lua require("telescope").extensions.live_grep_args.' ..
+               '<cmd>lua require("telescope").extensions.live_grep_args.' ..
                    'live_grep_args() hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>bf',
                '<cmd>Telescope buffers hidden=true theme=get_ivy<CR>')
