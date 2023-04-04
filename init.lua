@@ -540,6 +540,11 @@ require('packer').startup(function(use)
         config = function() require('textcase').setup {} end
     }
 
+    -- Be a legend hacker!
+    -- :Hack or :HackFollow
+    -- https://github.com/letieu/hacker.nvim
+    use {"letieu/hacker.nvim"}
+
     -- opt オプションを付けると遅延読み込みになります。
     -- この場合は opt だけで読み込む契機を指定していないため、
     -- `packadd` コマンドを叩かない限り読み込まれることはありません。
