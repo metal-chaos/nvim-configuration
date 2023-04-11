@@ -360,17 +360,6 @@ require('packer').startup(function(use)
         end
     }
 
-    -- INFO: Refactoring plugin
-    -- TODO: Modify null-ls
-    -- -- Refactoring
-    -- -- https://github.com/ThePrimeagen/refactoring.nvim
-    -- use {
-    --     "ThePrimeagen/refactoring.nvim",
-    --     requires = {
-    --         {"nvim-lua/plenary.nvim"}, {"nvim-treesitter/nvim-treesitter"}
-    --     }
-    -- }
-
     use {
         "petertriho/nvim-scrollbar",
         requires = "kevinhwang91/nvim-hlslens",
@@ -778,10 +767,11 @@ null_ls.setup({
         null_ls.builtins.formatting.dart_format,
         null_ls.builtins.formatting.gofmt,
         null_ls.builtins.formatting.lua_format,
+        null_ls.builtins.formatting.yamlfmt,
         null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.luacheck,
         null_ls.builtins.diagnostics.staticcheck,
-        null_ls.builtins.diagnostics.php
+        null_ls.builtins.diagnostics.yamllint, null_ls.builtins.diagnostics.php
     },
     on_attach = on_attach,
     debug = true
