@@ -78,7 +78,7 @@ vim.keymap.set('n', '<Leader>p',
                '<cmd>Telescope find_files hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>f',
                '<cmd>lua require("telescope").extensions.live_grep_args.' ..
-                   'live_grep_args() hidden=true theme=get_ivy<CR>')
+                   'live_grep_args({ theme="ivy" })<CR>')
 vim.keymap.set('n', '<Leader>bf',
                '<cmd>Telescope buffers hidden=true theme=get_ivy<CR>')
 vim.keymap.set('n', '<Leader>H',
@@ -771,7 +771,7 @@ null_ls.setup({
         null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.luacheck,
         null_ls.builtins.diagnostics.staticcheck,
-        null_ls.builtins.diagnostics.yamllint, null_ls.builtins.diagnostics.php
+        null_ls.builtins.diagnostics.php
     },
     on_attach = on_attach,
     debug = true
