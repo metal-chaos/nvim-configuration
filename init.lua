@@ -1,6 +1,17 @@
 local vim = vim
 local o = vim.o
 local g = vim.g
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git", "clone", "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git", "--branch=stable", -- latest stable release
+        lazypath
+    })
+end
+vim.opt.rtp:prepend(lazypath)
+
 g.mapleader = ";"
 
 -- Basic configuration
@@ -127,11 +138,6 @@ vim.keymap.set('n', '<Leader>;i', '<cmd>GoImport<CR>')
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
 
---- packer
-vim.keymap.set('n', '<Leader>mi', '<cmd>:PackerInstall<cr>')
-vim.keymap.set('n', '<Leader>mu', '<cmd>:PackerUpdate<cr>')
-vim.keymap.set('n', '<Leader>ms', '<cmd>:PackerSync<cr>')
-vim.keymap.set('n', '<Leader>mc', '<cmd>:PackerCompile<cr>')
 
 --- treesitter
 vim.keymap.set('n', '<Leader>vu', '<cmd>:TSUpdate all<cr>')
@@ -194,83 +200,58 @@ vim.api.nvim_create_autocmd({"BufReadPost"}, {
     callback = function() vim.api.nvim_exec('silent! normal! g`"zv', false) end
 })
 
-vim.cmd [[packadd packer.nvim]]
-vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 
-require('packer').startup(function(use)
+require('lazy').setup({
 
     -- 起動時に読み込むプラグインは名前を書くだけです
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-repeat'
-    use 'neovim/nvim-lspconfig'
+    'tpope/vim-fugitive', 'tpope/vim-repeat', 'neovim/nvim-lspconfig', --- LSP
+    'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim',
 
-    --- LSP
-    use 'williamboman/mason.nvim'
-    use 'williamboman/mason-lspconfig.nvim'
-
-    use "hrsh7th/nvim-cmp"
-    use "hrsh7th/cmp-nvim-lsp"
-    use "hrsh7th/vim-vsnip"
-    use "hrsh7th/cmp-buffer"
-    use "hrsh7th/cmp-vsnip"
-    use {'hrsh7th/nvim-compe'}
+    "hrsh7th/nvim-cmp", "hrsh7th/cmp-nvim-lsp", "hrsh7th/vim-vsnip",
+    "hrsh7th/cmp-buffer", "hrsh7th/cmp-vsnip", 'hrsh7th/nvim-compe',
 
     --- nvin-surround
     --- https://github.com/kylechui/nvim-surround
-    use({
+    {
         "kylechui/nvim-surround",
-        tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
         config = function()
             require("nvim-surround").setup({
                 -- Configuration here, or leave empty to use defaults
             })
         end
-    })
-
-    -- Comment out
+    }, -- Comment out
     -- https://github.com/terrortylor/nvim-comment
     -- gcip comment/uncomment a paragraph
     -- gc4w comment/uncomment current line
     -- gc4j comment/uncomment 4 lines below the current line
     -- dic delete comment block
     -- gcic uncomment commented block
-    use({
+    {
         "terrortylor/nvim-comment",
         config = function() require("nvim_comment").setup({}) end
-    })
-
-    if vim.g.vscode then return nil end
-
+    }, -- TODO: vscode configuration
+    -- if vim.g.vscode then return nil end
     --- Colorscheme
-    use 'tiagovla/tokyodark.nvim'
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'norcalli/nvim-colorizer.lua'
-    use 'navarasu/onedark.nvim'
-
-    --- buffer line
+    'tiagovla/tokyodark.nvim', 'nvim-treesitter/nvim-treesitter',
+    'norcalli/nvim-colorizer.lua', 'navarasu/onedark.nvim', --- buffer line
     -- See the following for more information
     -- @see https://github.com/akinsho/bufferline.nvim/blob/main/doc/bufferline.txt
-    use {
+    {
         'akinsho/nvim-bufferline.lua',
-        requires = 'kyazdani42/nvim-web-devicons',
-        tag = "v3.*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        version = "v3.*",
         config = function()
             require("bufferline").setup {
                 options = {separator_style = "thick", diagnostics = "nvim_lsp"}
             }
         end
-    }
-
-    --- Cursor mover
-    use "skanehira/jumpcursor.vim"
-
-    --- Git Blame
-    use "f-person/git-blame.nvim"
-
-    --- Telescope
-    use {
+    }, --- Cursor mover
+    "skanehira/jumpcursor.vim", --- Git Blame
+    "f-person/git-blame.nvim", --- Telescope
+    {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.0',
+        version = '0.1.0',
         defaults = {
             vimgrep_arguments = {
                 'rg', '--color=never', '--no-heading', '--with-filename',
@@ -280,62 +261,41 @@ require('packer').startup(function(use)
         -- Telescope live grep args
         -- Search strings with filters such as a directory
         -- @see https://github.com/nvim-telescope/telescope-live-grep-args.nvim
-        requires = {{"nvim-telescope/telescope-live-grep-args.nvim"}},
+        dependencies = {{"nvim-telescope/telescope-live-grep-args.nvim"}},
         config = function()
             require("telescope").load_extension("live_grep_args")
         end
-    }
-
-    -- File explorer
-    use {
-        'kyazdani42/nvim-tree.lua',
-        requires = {
-            'kyazdani42/nvim-web-devicons' -- optional, for file icons
-        },
-        tag = 'nightly' -- optional, updated every week. (see issue #1193)
-    }
-
-    --- plenary
-    use "nvim-lua/plenary.nvim"
-
-    --- neogit
-    use {'TimUntersberger/neogit'}
-
-    --- Git diff
-    use {'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim'}
+    }, -- File explorer
+    "nvim-lua/plenary.nvim", --- neogit
+    'TimUntersberger/neogit', --- Git diff
+    {'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim'},
 
     --- fidget (beatiful UI for LSP)
-    use 'j-hui/fidget.nvim'
-
-    use {
+    'j-hui/fidget.nvim', {
         'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
-    }
-
-    --- jose-elias-alvarez/null-ls.nvim
-    use {
+        dependencies = {'nvim-tree/nvim-web-devicons', lazy = true}
+    }, --- jose-elias-alvarez/null-ls.nvim
+    {
         "jose-elias-alvarez/null-ls.nvim",
-        requires = {"nvim-lua/plenary.nvim"}
-    }
-
-    use {
+        dependencies = {"nvim-lua/plenary.nvim"}
+    }, {
         'lewis6991/gitsigns.nvim',
         config = function() require('gitsigns').setup() end
-    }
+    },
 
     -- TODO: こいつを使用するとdiagnosticのbufferが勝手に開く
     -- めちゃくちゃむかついた
-    -- use({
+    -- {
     -- 	'ray-x/navigator.lua',
-    -- 	requires = { {
+    -- 	dependencies = { {
     -- 		'ray-x/guihua.lua',
-    -- 		run = 'cd lua/fzy && make'
+    -- 		build = 'cd lua/fzy && make'
     -- 	}, { 'neovim/nvim-lspconfig' } }
-    -- })
+    -- },
 
-    use {
+    {
         "folke/todo-comments.nvim",
-        requires = "nvim-lua/plenary.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
         config = function()
             require("todo-comments").setup {
                 -- your configuration comes here
@@ -343,13 +303,11 @@ require('packer').startup(function(use)
                 -- refer to the configuration section below
             }
         end
-    }
-
-    --- Trouble (show error messages at the bottom of the screen)
+    }, --- Trouble (show error messages at the bottom of the screen)
     --- https://github.com/folke/trouble.nvim
-    use {
+    {
         "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
+        dependencies = "nvim-tree/nvim-web-devicons",
         config = function()
             require("trouble").setup {
                 -- your configuration comes here
@@ -358,95 +316,73 @@ require('packer').startup(function(use)
                 auto_preview = true
             }
         end
-    }
-
-    use {
+    }, {
         "petertriho/nvim-scrollbar",
-        requires = "kevinhwang91/nvim-hlslens",
+        dependencies = "kevinhwang91/nvim-hlslens",
         config = function()
             require("scrollbar").setup({handle = {color = "#2fe0c5"}})
             -- INFO: Highlight matched strings
             require("scrollbar.handlers.search").setup()
             require("hlslens").setup()
         end
-    }
-
-    -- Neoscroll: a smooth scrolling neovim plugin written in lua
+    }, -- Neoscroll: a smooth scrolling neovim plugin written in lua
     -- https://github.com/karb94/neoscroll.nvim
-    use {
+    {
         "karb94/neoscroll.nvim",
         config = function()
             require("neoscroll").setup({easing_function = "quadratic"})
         end
-    }
-
-    --- Modern Go plugin
+    }, --- Modern Go plugin
     --- https://github.com/ray-x/go.nvim
-    use 'ray-x/go.nvim'
-    use 'ray-x/guihua.lua'
-
-    --- Indent configuration
+    'ray-x/go.nvim', 'ray-x/guihua.lua', --- Indent configuration
     --- https://github.com/lukas-reineke/indent-blankline.nvim
-    use "lukas-reineke/indent-blankline.nvim"
-
-    --- Indent configuration
-    use {
+    "lukas-reineke/indent-blankline.nvim", --- Indent configuration
+    {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
-    }
-
-    -- lspsaga
+    }, -- lspsaga
     -- https://github.com/nvimdev/lspsaga.nvim
-    use({
+    {
         "glepnir/lspsaga.nvim",
-        opt = true,
+        lazy = true,
         branch = "main",
         event = "LspAttach",
         config = function() require("lspsaga").setup({}) end,
-        requires = {
+        dependencies = {
             {"nvim-tree/nvim-web-devicons"},
             -- Please make sure you install markdown and markdown_inline parser
             {"nvim-treesitter/nvim-treesitter"}
         }
-    })
-
-    -- ChatGPT
+    }, -- ChatGPT
     -- https://github.com/jackMort/ChatGPT.nvim
-    use({
+    {
         "jackMort/ChatGPT.nvim",
         config = function() require("chatgpt").setup({}) end,
-        requires = {
+        dependencies = {
             "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim"
         }
-    })
-
-    -- https://github.com/gbprod/substitute.nvim
+    }, -- https://github.com/gbprod/substitute.nvim
     -- Plugin for substitution
-    use({
+    {
         "gbprod/substitute.nvim",
         config = function() require("substitute").setup({}) end
-    })
-
-    -- https://github.com/chentoast/marks.nvim
+    }, -- https://github.com/chentoast/marks.nvim
     -- Mappings link
     -- https://github.com/chentoast/marks.nvim#mappings
     -- Plugin for marks
-    use({
-        "chentoast/marks.nvim",
-        config = function() require("marks").setup({}) end
-    })
+    {"chentoast/marks.nvim", config = function() require("marks").setup({}) end},
 
     -- https://github.com/Eandrju/cellular-automaton.nvim
     -- :CellularAutomaton make_it_rain
     -- :CellularAutomaton game_of_life
-    use 'eandrju/cellular-automaton.nvim'
+    'eandrju/cellular-automaton.nvim',
 
     -- https://github.com/nvim-neotest/neotest
     -- Plugin for executing tests
-    use {
+    {
         "nvim-neotest/neotest",
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter",
             "antoinemadec/FixCursorHold.nvim", 'olimorris/neotest-phpunit'
         },
@@ -461,11 +397,9 @@ require('packer').startup(function(use)
                 }
             })
         end
-    }
-
-    -- Dashboard theme
+    }, -- Dashboard theme
     -- https://github.com/glepnir/dashboard-nvim
-    use {
+    {
         'glepnir/dashboard-nvim',
         event = 'VimEnter',
         config = function()
@@ -473,20 +407,17 @@ require('packer').startup(function(use)
                 -- config
             }
         end,
-        requires = {'nvim-tree/nvim-web-devicons'}
-    }
+        dependencies = {'nvim-tree/nvim-web-devicons'}
+    },
 
     -- impatient.nvim: Speed up loading Lua modules in Neovim to improve startup time.
     -- https://github.com/lewis6991/impatient.nvim
-    use {
-        "lewis6991/impatient.nvim",
-        config = function() require("impatient") end
-    }
+    {"lewis6991/impatient.nvim", config = function() require("impatient") end},
 
     -- Noice
     -- Customize here if bothersome notification appeared
     -- @see https://github.com/folke/noice.nvim
-    use({
+    {
         "folke/noice.nvim",
         config = function()
             require("noice").setup({
@@ -508,56 +439,38 @@ require('packer').startup(function(use)
                 }
             })
         end,
-        requires = {
+        dependencies = {
             -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
             "MunifTanjim/nui.nvim", -- OPTIONAL:
             --   `nvim-notify` is only needed, if you want to use the notification view.
             --   If not available, we use `mini` as the fallback
             "rcarriga/nvim-notify"
         }
-    })
-
-    -- easyread.nvim: bionic-like reading
+    }, -- easyread.nvim: bionic-like reading
     -- @see https://github.com/JellyApple102/easyread.nvim
-    use {
+    {
         'JellyApple102/easyread.nvim',
         config = function()
             require("easyread").setup({saccadeInterval = 2})
         end
-    }
-
-    -- text-case.nvim
+    }, -- text-case.nvim
     -- There are methods that convert a specific text to the specified case
     -- Example: Upper case, Lower case, Snake case and Camel case
     -- @see https://github.com/johmsalas/text-case.nvim
-    use {
+    {
         "johmsalas/text-case.nvim",
         config = function() require('textcase').setup {} end
-    }
-
-    -- Be a legend hacker!
+    }, -- Be a legend hacker!
     -- :Hack or :HackFollow
     -- https://github.com/letieu/hacker.nvim
-    use {"letieu/hacker.nvim"}
-
-    -- opt オプションを付けると遅延読み込みになります。
-    -- この場合は opt だけで読み込む契機を指定していないため、
-    -- `packadd` コマンドを叩かない限り読み込まれることはありません。
-    use {'wbthomason/packer.nvim', opt = true}
-    -- packer.nvim 自体を遅延読み込みにする理由はまた後ほど。
-
-    -- コマンドを叩いたときに読み込む。
-    use {'rhysd/git-messenger.vim', opt = true, cmd = {'GitMessenger'}}
+    "letieu/hacker.nvim", -- コマンドを叩いたときに読み込む。
+    {'rhysd/git-messenger.vim', lazy = true, cmd = {'GitMessenger'}},
 
     -- 特定のイベントで読み込む
-    use {
-        'tpope/vim-unimpaired',
-        opt = true,
-        event = {'FocusLost', 'CursorHold'}
-    }
+    {'tpope/vim-unimpaired', lazy = true, event = {'FocusLost', 'CursorHold'}},
 
     -- 特定のファイルタイプのファイルを開いたら読み込む
-    use {'fatih/vim-go', opt = true, ft = {'go'}}
+    {'fatih/vim-go', lazy = true, ft = {'go'}},
 
     -- 特定のキーを叩いたら読み込む
     -- この例ではノーマルモードの <CR> にマッピングしていますが、
@@ -566,43 +479,37 @@ require('packer').startup(function(use)
     --   {'n', '<CR>'},
     --   {'v', '<CR>'},
     -- }
-    use {'arecarn/vim-fold-cycle', opt = true, keys = {'<CR>'}}
+    {'arecarn/vim-fold-cycle', lazy = true, keys = {'<CR>'}},
 
-    -- 特定の VimL 関数を呼ぶと読み込む
-    -- この例だと、任意の場所で Artify('hoge', 'bold') のように呼び出された時に、
-    -- このプラグインも読み込まれます。
-    use {'sainnhe/artify.vim', opt = true, fn = {'Artify'}}
 
-    -- 実は opt = true は省略できます。読み込む契機（この例では cmd）を指定すると、
+    -- 実は lazy = true は省略できます。読み込む契機（この例では cmd）を指定すると、
     -- 自動的に遅延読み込みとみなされます。
-    use {
+    {
         'ellisonleao/glow.nvim',
         cmd = {'Glow', 'GlowInstall'},
-        -- run オプションを指定すると、インストール時・更新時に
+        -- build オプションを指定すると、インストール時・更新時に
         -- 実行するコマンドを指定できます。
-        run = [[:GlowInstall]]
+        build = [[:GlowInstall]]
         -- 先頭に : がついていないなら bash -c '...' で実行されます。
-        -- run = [[npm install]],
+        -- build = [[npm install]],
         -- 関数も指定可能です。
-        -- run = function() vim.cmd[[GlowInstall]] end,
-    }
+        -- build = function() vim.cmd[[GlowInstall]] end,
+    },
 
     -- 条件が真の時のみ読み込みます。条件は起動時に毎回判定されます。
-    use {
+    {
         'thinca/vim-fontzoom',
         cond = [[vim.fn.has'gui' == 1]] -- GUI の時のみ読み込む。
         -- 関数も指定できます。
         -- conf = function() return vim.fn.has'gui' == 1 end,
-    }
-
-    -- 依存関係も管理できます。vim-prettyprint は
+    }, -- 依存関係も管理できます。vim-prettyprint は
     -- capture.vim が読み込まれる前に、自動的に packadd されます。
-    use {
+    {
         'tyru/capture.vim',
-        requires = {{'thinca/vim-prettyprint', cmd = {'PP', 'PrettyPrint'}}},
+        dependencies = {{'thinca/vim-prettyprint', cmd = {'PP', 'PrettyPrint'}}},
         cmd = {'Capture'}
     }
-end)
+})
 
 -- 1. LSP Sever management
 require('mason').setup()
@@ -782,5 +689,8 @@ null_ls.setup({
     on_attach = on_attach,
     debug = true
 })
+
+require "lazy-setup"
+
 -- Packer compile
-vim.api.nvim_command(':PackerCompile')
+-- vim.api.nvim_command(':PackerCompile')
