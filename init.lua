@@ -138,7 +138,6 @@ vim.keymap.set('n', '<Leader>;i', '<cmd>GoImport<CR>')
 --- Mason
 vim.keymap.set('n', '<Leader>M', '<cmd>:Mason<cr>')
 
-
 --- treesitter
 vim.keymap.set('n', '<Leader>vu', '<cmd>:TSUpdate all<cr>')
 
@@ -199,7 +198,6 @@ vim.api.nvim_create_autocmd({"BufReadPost"}, {
     pattern = {"*"},
     callback = function() vim.api.nvim_exec('silent! normal! g`"zv', false) end
 })
-
 
 require('lazy').setup({
 
@@ -481,7 +479,6 @@ require('lazy').setup({
     -- }
     {'arecarn/vim-fold-cycle', lazy = true, keys = {'<CR>'}},
 
-
     -- 実は lazy = true は省略できます。読み込む契機（この例では cmd）を指定すると、
     -- 自動的に遅延読み込みとみなされます。
     {
@@ -508,6 +505,11 @@ require('lazy').setup({
         'tyru/capture.vim',
         dependencies = {{'thinca/vim-prettyprint', cmd = {'PP', 'PrettyPrint'}}},
         cmd = {'Capture'}
+    }, {
+        "nvim-tree/nvim-tree.lua",
+        version = "*",
+        dependencies = {"nvim-tree/nvim-web-devicons"},
+        config = function() require("nvim-tree").setup {} end
     }
 })
 
@@ -691,6 +693,3 @@ null_ls.setup({
 })
 
 require "lazy-setup"
-
--- Packer compile
--- vim.api.nvim_command(':PackerCompile')
