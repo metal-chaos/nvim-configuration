@@ -132,8 +132,9 @@ keymap("n", "<leader>;j", "<cmd>lua require('neotest').run.run()<cr>")
 
 --- Github copilot
 -- https://rcmdnk.com/blog/2022/09/28/computer-vim/
-keymap("n", "<C-]>", "<Plug>(copilot-next)")
-keymap("n", "<C-[>", "<Plug>(copilot-previous)")
+keymap("i", "<C-l>", "<Plug>(copilot-next)")
+keymap("i", "<C-h>", "<Plug>(copilot-previous)")
+keymap("i", "<C-d>", "<Plug>(copilot-dismiss)")
 
 -- ChatGPT
 -- https://github.com/jackMort/ChatGPT.nvim
