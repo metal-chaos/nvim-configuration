@@ -1,20 +1,3 @@
--- if you want to set up formatting on save, you can use this as a callback
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
--- Formatter
--- https://github.com/jose-elias-alvarez/null-ls.nvim
--- https://zenn.dev/nazo6/articles/c2f16b07798bab
--- Maybe this way? -> https://github.com/jose-elias-alvarez/null-ls.nvim/issues/844
-local lsp_formatting = function(bufnr)
-    vim.lsp.buf.format({
-        filter = function(client)
-            -- apply whatever logic you want (in this example, we'll only use null-ls)
-            return client.name == "null-ls"
-        end,
-        bufnr = bufnr
-    })
-end
-
 -- Language server list
 -- GO: gopls
 -- Typescript: typescript-language-server
@@ -23,6 +6,23 @@ return {
     "jose-elias-alvarez/null-ls.nvim",
     dependencies = {"nvim-lua/plenary.nvim"},
     config = function()
+        -- if you want to set up formatting on save, you can use this as a callback
+        print("debug message")
+
+        local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+        -- Formatter
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim
+        -- https://zenn.dev/nazo6/articles/c2f16b07798bab
+        -- Maybe this way? -> https://github.com/jose-elias-alvarez/null-ls.nvim/issues/844
+        local lsp_formatting = function(bufnr)
+            vim.lsp.buf.format({
+                filter = function(client)
+                    -- apply whatever logic you want (in this example, we'll only use null-ls)
+                    return client.name == "null-ls"
+                end,
+                bufnr = bufnr
+            })
+        end
         require("null-ls").setup({
             sources = {
                 require("null-ls").builtins.formatting.rustfmt.with({
