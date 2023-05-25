@@ -14,7 +14,7 @@ return {
                             client.server_capabilities
                                 .documentRangeFormattingProvider = false
                         end,
-                        handlers = {
+                handlers = {
                             -- TODO: diagnostic configuration
                             -- https://neovim.io/doc/user/lsp.html#lsp-api
                             ["textDocument/publishDiagnostics"] = vim.lsp.with(
