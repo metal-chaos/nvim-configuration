@@ -4,7 +4,7 @@ vim.loader.enable()
 
 require "core.options"
 require "core.keymaps"
-require "lazy-setup"
 require "core.autocommands"
 require "core.cmd"
+require "lazy-setup"
 require "core.colorscheme"
