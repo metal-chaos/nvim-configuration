@@ -3,8 +3,8 @@
 vim.loader.enable()
 
 require "core.options"
-require "core.keymaps"
 require "core.autocommands"
+require "core.keymaps"
 require "core.cmd"
 require "lazy-setup"
 require "core.colorscheme"
