@@ -45,5 +45,6 @@ return {
                 }
             }
         })
-    end
+    end,
+    cmd = "Telescope"
 }
