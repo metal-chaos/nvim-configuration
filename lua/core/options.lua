@@ -10,7 +10,7 @@ o.tabstop = 4
 o.softtabstop = 4
 o.shiftwidth = 4
 o.laststatus = 3
-o.completeopt = "menu,menuone,noselect"
+-- o.completeopt = "menu,menuone,noselect"
 o.list = true
 opt.listchars:append "space:⋅"
 opt.listchars:append "eol:↴"

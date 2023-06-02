@@ -1,6 +1,8 @@
 return {
-    "neovim/nvim-lspconfig", "williamboman/mason.nvim", {
-		-- Mason
+    "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
+    {
+        -- Mason
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require('mason').setup()
@@ -14,7 +16,7 @@ return {
                             client.server_capabilities
                                 .documentRangeFormattingProvider = false
                         end,
-                handlers = {
+                        handlers = {
                             -- TODO: diagnostic configuration
                             -- https://neovim.io/doc/user/lsp.html#lsp-api
                             ["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -31,8 +33,8 @@ return {
                     })
                 end
             })
-
+            vim.opt.completeopt = "menu,menuone,noselect"
         end
     },
-	build = ":MasonUpdate"
+    build = ":MasonUpdate"
 }
