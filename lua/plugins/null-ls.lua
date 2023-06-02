@@ -11,7 +11,7 @@ function M.config()
     local null_ls = require("null-ls")
     local sources = {
         null_ls.builtins.formatting.rustfmt.with({filetypes = {"rust"}}),
-        null_ls.builtins.formatting.prettier.with({
+        null_ls.builtins.formatting.prettierd.with({
             filetypes = {
                 "javascript", "javascriptreact", "typescript",
                 "typescriptreact", "vue", "css", "scss", "less", "json",
