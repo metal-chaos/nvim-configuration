@@ -8,7 +8,6 @@ local M = {
 }
 
 function M.config()
-    print('aaaaaaaa')
     local null_ls = require("null-ls")
     local sources = {
         null_ls.builtins.formatting.rustfmt.with({filetypes = {"rust"}}),
