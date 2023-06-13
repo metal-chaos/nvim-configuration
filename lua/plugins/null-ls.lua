@@ -18,6 +18,11 @@ function M.config()
                 "jsonc", "markdown", "graphql", "handlebars", "svelte", "php",
                 "html"
             }
+        }), null_ls.builtins.code_actions.eslint_d.with({
+            filetypes = {
+                "javascript", "javascriptreact", "typescript",
+                "typescriptreact", "vue"
+            }
         }), null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.dart_format,
         null_ls.builtins.formatting.gofmt,
