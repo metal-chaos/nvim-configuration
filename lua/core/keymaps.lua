@@ -5,7 +5,7 @@ local keymap = vim.keymap.set
 g.mapleader = ";"
 
 -- Set keymap
-keymap('n', '<Leader>j', '<Plug>(jumpcursor-jump)')
+keymap('n', '<Leader>e', '<Plug>(jumpcursor-jump)')
 keymap('n', '<Leader>q', '<cmd>:q<cr>')
 keymap('n', '<Leader>Q', '<cmd>:q!<cr>')
 keymap('n', '<Leader>w', '<cmd>:w<cr>')
