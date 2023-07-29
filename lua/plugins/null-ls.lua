@@ -27,7 +27,7 @@ function M.config()
         null_ls.builtins.formatting.dart_format,
         null_ls.builtins.formatting.gofmt,
         null_ls.builtins.formatting.lua_format,
-        null_ls.builtins.formatting.yamlfmt,
+        -- null_ls.builtins.formatting.yamlfmt,
         null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.luacheck,
         null_ls.builtins.diagnostics.staticcheck,
