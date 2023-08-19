@@ -149,3 +149,7 @@ keymap('n', 'c0', '<cmd>GitConflictChooseNone<CR>')
 keymap('n', 'cl', '<cmd>GitConflictNextConflict<CR>')
 keymap('n', 'ch', '<cmd>GitConflictPrevConflict<CR>')
 keymap('n', 'cm', '<cmd>GitConflictListQf<CR>')
+
+-- diffview.nvim
+keymap('n', '<Leader>c', '<cmd>DiffviewOpen<CR>')
+keymap('n', '<Leader>v', '<cmd>DiffviewFileHistory %<CR>')
