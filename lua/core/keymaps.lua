@@ -88,6 +88,8 @@ keymap('n', 'gac',
        "<cmd>:lua require('textcase').current_word('to_camel_case')<CR>")
 keymap('n', 'gap',
        "<cmd>:lua require('textcase').current_word('to_pascal_case')<CR>")
+keymap('n', 'gah',
+       "<cmd>:lua require('textcase').current_word('to_phrase_case')<CR>")
 
 --- neogit
 keymap('n', '<Leader>gn', '<cmd>:Neogit<cr>')
