@@ -1,9 +1,10 @@
 -- Language server list
 -- GO: gopls
 -- Typescript: typescript-language-server
---- jose-elias-alvarez/null-ls.nvim
+-- jose-elias-alvarez/null-ls.nvim
+-- https://github.com/nvimtools/none-ls.nvim
 local M = {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     dependencies = {"nvim-lua/plenary.nvim", "vim-test/vim-test"}
 }
 
