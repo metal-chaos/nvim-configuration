@@ -1,6 +1,7 @@
 local o = vim.o
 local opt = vim.opt
 local g = vim.g
+local wo = vim.wo
 
 o.number = true
 o.clipboard = "unnamedplus"
@@ -15,6 +16,7 @@ o.list = true
 opt.listchars:append "space:⋅"
 opt.listchars:append "eol:↴"
 o.termguicolors = true
+wo.relativenumber = true
 
 -- NeoVide configuration
 g.neovide_transparency = 0.8
