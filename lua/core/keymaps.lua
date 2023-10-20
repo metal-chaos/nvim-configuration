@@ -120,6 +120,9 @@ keymap('n', '<Leader>F', '<cmd>:NvimTreeFindFile<cr>')
 --- Trouble
 keymap('n', '<Leader>n', '<cmd>:TroubleToggle<cr>')
 
+--- Twilight
+keymap('n', '<Leader>o', '<cmd>:Twilight<cr>')
+
 --- Substitution
 keymap("n", "<leader>jj", "<cmd>lua require('substitute').line()<cr>",
        {noremap = true})
