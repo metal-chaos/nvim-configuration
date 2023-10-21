@@ -44,11 +44,11 @@ keymap('n', "<Leader>mm", "<C-w>j<cr>")
 
 --- LSP
 keymap('n', '<Leader>s', '<cmd>lua vim.lsp.buf.format()<CR>')
-keymap('n', '<Leader>kk', '<cmd>:Lspsaga hover_doc<CR>')
-keymap('n', '<Leader>kf', '<cmd>:Lspsaga lsp_finder<CR>')
-keymap('n', '<Leader>kd', '<cmd>:Lspsaga code_action<CR>')
-keymap('n', '<Leader>ki', '<cmd>:Lspsaga signature_help<CR>')
-keymap('n', '<Leader>kr', '<cmd>:Lspsaga rename<CR>')
+keymap('n', '<Leader>kk', '<cmd>Lspsaga hover_doc<CR>')
+keymap('n', '<Leader>kf', '<cmd>Lspsaga goto_definition<CR>')
+keymap('n', '<Leader>kt', '<cmd>Lspsaga goto_type_definition<CR>')
+keymap('n', '<Leader>ka', '<cmd>Lspsaga code_action<CR>')
+keymap('n', '<Leader>kr', '<cmd>Lspsaga rename<CR>')
 
 -- Move to a directory
 keymap('n', '<Leader>cdt', '<cmd>cd ~/trander<CR>')

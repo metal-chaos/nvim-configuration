@@ -1,7 +1,7 @@
 -- https://github.com/hrsh7th/nvim-cmp
 -- It didn't work when adding cmp to config in this file so separated it into core/cmp.lua
 return {
-    {'hrsh7th/nvim-cmp', event = 'InsertEnter, CmdlineEnter'},
+    {'hrsh7th/nvim-cmp', event = {'InsertEnter', 'CmdlineEnter'}},
     {'hrsh7th/cmp-nvim-lsp', event = 'InsertEnter'},
     {'hrsh7th/cmp-buffer', event = 'InsertEnter'},
     {'hrsh7th/cmp-path', event = 'InsertEnter'},

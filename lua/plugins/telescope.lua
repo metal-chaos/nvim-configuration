@@ -1,6 +1,6 @@
 return {
     'nvim-telescope/telescope.nvim',
-    version = '0.1.0',
+    tag = '0.1.4',
     defaults = {
         vimgrep_arguments = {
             'rg', '--color=never', '--no-heading', '--with-filename',
