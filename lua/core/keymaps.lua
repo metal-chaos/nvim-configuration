@@ -15,8 +15,8 @@ keymap('n', '<Leader>cc', '<cmd>CpPath<cr>')
 keymap('n', '<Leader>cf', '<cmd>CpFileName<cr>')
 
 -- buffers
-keymap('n', '<Leader>ls', '<cmd>:ls<cr>')
-keymap('n', '<Leader>bq', '<cmd>b#<cr><cmd>bd#<cr>')
+keymap('n', '<Leader>ls', '<cmd>ls<cr>')
+keymap('n', '<Leader>bd', '<cmd>bdelete<cr>')
 
 -- buffer line
 keymap('n', '<C-l>', '<cmd>BufferLineCycleNext<cr>')
