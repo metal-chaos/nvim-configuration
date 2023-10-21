@@ -3,10 +3,14 @@
 return {
     'akinsho/nvim-bufferline.lua',
     dependencies = 'nvim-tree/nvim-web-devicons',
-    version = "v3.*",
+    version = "*",
     config = function()
         require("bufferline").setup {
-            options = {separator_style = "thick", diagnostics = "nvim_lsp"}
+            options = {
+                separator_style = "thick",
+                diagnostics = "nvim_lsp",
+                hover = {enabled = true, delay = 200, reveal = {'close'}}
+            }
         }
     end
 }

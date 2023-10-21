@@ -34,6 +34,7 @@ keymap('n', '<Leader>6', '<cmd>BufferLineGoToBuffer 6<cr>')
 keymap('n', '<Leader>7', '<cmd>BufferLineGoToBuffer 7<cr>')
 keymap('n', '<Leader>8', '<cmd>BufferLineGoToBuffer 8<cr>')
 keymap('n', '<Leader>9', '<cmd>BufferLineGoToBuffer -1<cr>')
+keymap('n', '<Leader>ba', '<cmd>BufferLineCloseOthers<cr>')
 
 --- Split screen
 keymap('n', "<Leader>t", "<C-w>v<cr>")
