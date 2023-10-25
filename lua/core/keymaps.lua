@@ -49,7 +49,9 @@ keymap('n', '<Leader>kk', '<cmd>Lspsaga hover_doc<CR>')
 keymap('n', '<Leader>kf', '<cmd>Lspsaga goto_definition<CR>')
 keymap('n', '<Leader>kt', '<cmd>Lspsaga goto_type_definition<CR>')
 keymap('n', '<Leader>ka', '<cmd>Lspsaga code_action<CR>')
+-- Change to mode=n
 keymap('n', '<Leader>kr', '<cmd>Lspsaga rename<CR>')
+keymap('n', '<Leader>kp', '<cmd>Lspsaga project_replace old_name new_name<CR>')
 
 -- Move to a directory
 keymap('n', '<Leader>cdt', '<cmd>cd ~/trander<CR>')
