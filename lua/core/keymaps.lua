@@ -161,3 +161,6 @@ keymap('n', 'cm', '<cmd>GitConflictListQf<CR>')
 -- diffview.nvim
 keymap('n', '<Leader>c', '<cmd>DiffviewOpen<CR>')
 keymap('n', '<Leader>v', '<cmd>DiffviewFileHistory %<CR>')
+
+-- Gyazo
+keymap('n', '<Leader>b', '<cmd>GyazoUpload<CR>')
