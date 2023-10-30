@@ -17,7 +17,7 @@ function M.config()
                 "javascript", "javascriptreact", "typescript",
                 "typescriptreact", "vue", "css", "scss", "less", "json",
                 "jsonc", "markdown", "graphql", "handlebars", "svelte", "php",
-                "html"
+                "html", "astro"
             }
         }), null_ls.builtins.diagnostics.eslint_d.with({
             filetypes = {
@@ -48,6 +48,7 @@ function M.config()
             filter = function(client)
                 -- apply whatever logic you want (in this example, we'll only use null-ls)
                 return client.name == "null-ls"
+                -- return true
             end,
             async = false
         })
