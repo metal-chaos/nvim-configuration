@@ -163,4 +163,4 @@ keymap('n', '<Leader>c', '<cmd>DiffviewOpen<CR>')
 keymap('n', '<Leader>v', '<cmd>DiffviewFileHistory %<CR>')
 
 -- Gyazo
-keymap('n', '<Leader>b', '<cmd>:GyazoUpload<CR>')
+keymap('n', '<Leader>b', '<cmd>GyazoUpload<CR>')
