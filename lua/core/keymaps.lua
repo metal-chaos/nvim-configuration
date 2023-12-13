@@ -13,6 +13,7 @@ keymap('n', '<Leader>wq', '<cmd>:wq<cr>')
 keymap('n', '<Leader>i', '<cmd>tabnew<cr>')
 keymap('n', '<Leader>cc', '<cmd>CpPath<cr>')
 keymap('n', '<Leader>cf', '<cmd>CpFileName<cr>')
+-- keymap('n', '<Leader>aa', '<Plug>(YankyNextEntry)')
 
 -- buffers
 keymap('n', '<Leader>ls', '<cmd>ls<cr>')
