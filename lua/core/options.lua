@@ -17,7 +17,12 @@ opt.listchars:append "space:⋅"
 opt.listchars:append "eol:↴"
 o.termguicolors = true
 wo.relativenumber = true
+opt.cursorline = true
 
 -- NeoVide configuration
 g.neovide_transparency = 0.8
 g.neovide_cursor_vfx_mode = "ripple"
+
+vim.cmd [[
+  highlight CursorLineNr term=bold cterm=bold gui=bold
+]]
