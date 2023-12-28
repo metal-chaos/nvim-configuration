@@ -68,6 +68,7 @@ keymap('n', '<Leader>eh', '<cmd>:Lspsaga diagnostic_jump_prev<CR>')
 --- Telescope
 keymap('n', '<Leader>p',
        '<cmd>Telescope find_files hidden=true theme=get_ivy<CR>')
+-- keymap('n', '<Leader>;p', '<cmd>Telescope find_files theme=get_ivy<CR>')
 keymap('n', '<Leader>f',
        '<cmd>lua require("telescope").extensions.live_grep_args.' ..
            'live_grep_args({ theme="ivy" })<CR>')

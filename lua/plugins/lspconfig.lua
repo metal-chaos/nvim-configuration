@@ -5,6 +5,9 @@ return {
         -- Mason
         "williamboman/mason-lspconfig.nvim",
         config = function()
+            require'lspconfig'.dartls.setup {
+                cmd = {"dart", 'language-server', '--protocol=lsp'}
+            }
             require('mason').setup()
             require('mason-lspconfig').setup_handlers({
                 function(server)
