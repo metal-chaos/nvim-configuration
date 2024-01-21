@@ -5,7 +5,8 @@
 -- https://github.com/nvimtools/none-ls.nvim
 local M = {
     "nvimtools/none-ls.nvim",
-    dependencies = {"nvim-lua/plenary.nvim", "vim-test/vim-test"}
+    dependencies = {"nvim-lua/plenary.nvim", "vim-test/vim-test"},
+    commit = "e64f03f3f77bd6854c3b3c5cfffcc806a0c0f66a"
 }
 
 function M.config()
