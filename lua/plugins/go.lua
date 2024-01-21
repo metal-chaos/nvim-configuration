@@ -7,7 +7,7 @@ return {
         "nvim-treesitter/nvim-treesitter", "mfussenegger/nvim-dap",
         "rcarriga/nvim-dap-ui", "theHamsta/nvim-dap-virtual-text"
     },
-    config = function() require("go").setup({}) end,
+    config = function() require("go").setup({tag_options = ''}) end,
     event = {"CmdlineEnter"},
     ft = {"go", 'gomod'},
     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
