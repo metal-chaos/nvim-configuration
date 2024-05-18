@@ -12,6 +12,16 @@ return {
             require('mason-lspconfig').setup_handlers({
                 function(server)
                     require('lspconfig')[server].setup({
+                        -- Language server
+                        init_options = {
+                            hostInfo = "neovim",
+                            preferences = {
+                                importModuleSpecifierEnding = "minimal",
+                                importModuleSpecifierPreference = "relative",
+                                includeCompletionsForImportStatements = true,
+                                includeCompletionsForModuleExports = true
+                            }
+                        },
                         on_attach = function(client)
                             -- Disable formatting
                             client.server_capabilities

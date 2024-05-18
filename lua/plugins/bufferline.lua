@@ -3,7 +3,6 @@
 return {
     'akinsho/nvim-bufferline.lua',
     dependencies = 'nvim-tree/nvim-web-devicons',
-    version = "*",
     config = function()
         require("bufferline").setup {
             options = {

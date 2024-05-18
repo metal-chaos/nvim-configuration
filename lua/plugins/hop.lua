@@ -2,6 +2,6 @@
 -- EasyMotion-like plugin
 return {
     'smoka7/hop.nvim',
-    version = "*",
+    -- version = "*",
     config = function() require("hop").setup({}) end
 }
