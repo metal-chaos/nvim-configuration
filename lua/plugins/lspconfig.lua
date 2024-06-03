@@ -46,7 +46,7 @@ return {
                                 hostInfo = "neovim",
                                 preferences = {
                                     importModuleSpecifierEnding = "minimal",
-                                    importModuleSpecifierPreference = "relative",
+                                    importModuleSpecifierPreference = "non-relative",
                                     includeCompletionsForImportStatements = true,
                                     includeCompletionsForModuleExports = true
                                 }
