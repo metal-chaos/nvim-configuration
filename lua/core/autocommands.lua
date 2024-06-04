@@ -2,14 +2,14 @@ local api = vim.api
 
 -- Copy path name
 api.nvim_create_user_command("CpPath", function()
-    local path = vim.fn.expand('%')
+    local path = vim.fn.expand('%:p:.')
     vim.fn.setreg("+", path)
     vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
 
 -- Copy file name
 api.nvim_create_user_command("CpFileName", function()
-    local path = vim.fn.expand('%:t')
+    local path = vim.fn.expand('%:t:r')
     vim.fn.setreg("+", path)
     vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
