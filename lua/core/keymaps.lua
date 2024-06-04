@@ -99,9 +99,8 @@ keymap('n', 'gah',
 
 --- neogit
 keymap('n', '<Leader>gn', '<cmd>:Neogit<cr>')
--- git-conflict
-keymap('n', '<Leader>gv', '<cmd>GitConflictListQf<CR>')
 
+--- Go
 keymap('n', '<Leader>;c', '<cmd>GoCmt<CR>')
 keymap('n', '<Leader>;aj', '<cmd>GoAddTag json<CR>')
 keymap('n', '<Leader>;ad', '<cmd>GoAddTag db<CR>')
@@ -143,18 +142,7 @@ keymap('n', '<Leader>jk', '<cmd>SubClipboard<cr>')
 --- Execute a nearest test
 keymap("n", "<leader>;j", "<cmd>lua require('neotest').run.run()<cr>")
 
---- Github copilot
--- https://rcmdnk.com/blog/2022/09/28/computer-vim/
-keymap("i", "<C-l>", "<Plug>(copilot-next)")
-keymap("i", "<C-h>", "<Plug>(copilot-previous)")
-keymap("i", "<C-d>", "<Plug>(copilot-dismiss)")
-
--- ChatGPT
--- https://github.com/jackMort/ChatGPT.nvim
-keymap('n', '<Leader>tk', '<cmd>:ChatGPT<cr>')
-keymap('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>')
-keymap('n', '<Leader>tt', '<cmd>:ChatGPTEditWithInstructions<cr>')
-
+--- GitConflict
 keymap('n', 'co', '<cmd>GitConflictChooseOurs<CR>')
 keymap('n', 'ct', '<cmd>GitConflictChooseTheirs<CR>')
 keymap('n', 'cb', '<cmd>GitConflictChooseBoth<CR>')
@@ -162,6 +150,10 @@ keymap('n', 'c0', '<cmd>GitConflictChooseNone<CR>')
 keymap('n', 'cl', '<cmd>GitConflictNextConflict<CR>')
 keymap('n', 'ch', '<cmd>GitConflictPrevConflict<CR>')
 keymap('n', 'cm', '<cmd>GitConflictListQf<CR>')
+
+--- GitBlame
+keymap('n', '<Leader>gf', '<cmd>GitBlameOpenFileURL<CR>')
+keymap('n', '<Leader>gc', '<cmd>GitBlameOpenCommitURL<CR>')
 
 -- diffview.nvim
 keymap('n', '<Leader>c', '<cmd>DiffviewOpen<CR>')
