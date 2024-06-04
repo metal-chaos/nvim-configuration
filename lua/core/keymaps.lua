@@ -97,9 +97,6 @@ keymap('n', 'gap',
 keymap('n', 'gah',
        "<cmd>:lua require('textcase').current_word('to_phrase_case')<CR>")
 
---- neogit
-keymap('n', '<Leader>gn', '<cmd>:Neogit<cr>')
-
 --- Go
 keymap('n', '<Leader>;c', '<cmd>GoCmt<CR>')
 keymap('n', '<Leader>;aj', '<cmd>GoAddTag json<CR>')
@@ -151,13 +148,13 @@ keymap('n', 'cl', '<cmd>GitConflictNextConflict<CR>')
 keymap('n', 'ch', '<cmd>GitConflictPrevConflict<CR>')
 keymap('n', 'cm', '<cmd>GitConflictListQf<CR>')
 
---- GitBlame
-keymap('n', '<Leader>gf', '<cmd>GitBlameOpenFileURL<CR>')
-keymap('n', '<Leader>gc', '<cmd>GitBlameOpenCommitURL<CR>')
-
--- diffview.nvim
-keymap('n', '<Leader>c', '<cmd>DiffviewOpen<CR>')
-keymap('n', '<Leader>v', '<cmd>DiffviewFileHistory %<CR>')
+--- Git
+keymap('n', 'gf', '<cmd>GitBlameOpenFileURL<CR>')
+keymap('n', 'gc', '<cmd>GitBlameOpenCommitURL<CR>')
+keymap('n', 'gh', '<cmd>Gitsigns prev_hunk<CR>')
+keymap('n', 'gl', '<cmd>Gitsigns next_hunk<CR>')
+keymap('n', 'gd', '<cmd>Gitsigns diffthis<CR>')
+keymap('n', 'gv', '<cmd>DiffviewFileHistory %<CR>')
 
 -- Gyazo
 keymap('n', '<Leader>b', '<cmd>GyazoUpload<CR>')
