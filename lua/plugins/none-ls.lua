@@ -5,38 +5,37 @@
 -- https://github.com/nvimtools/none-ls.nvim
 local M = {
     "nvimtools/none-ls.nvim",
-    dependencies = {"nvim-lua/plenary.nvim", "vim-test/vim-test"},
-    commit = "e64f03f3f77bd6854c3b3c5cfffcc806a0c0f66a"
+    dependencies = {"nvim-lua/plenary.nvim", "vim-test/vim-test", "nvimtools/none-ls-extras.nvim"}
 }
 
 function M.config()
     local null_ls = require("null-ls")
     local sources = {
-        null_ls.builtins.formatting.rustfmt.with({filetypes = {"rust"}}),
-        null_ls.builtins.formatting.prettier.with({
+       require("none-ls.code_actions.eslint_d").with({
             filetypes = {
                 "javascript", "javascriptreact", "typescript",
                 "typescriptreact", "vue", "css", "scss", "less", "json",
                 "jsonc", "markdown", "graphql", "handlebars", "svelte", "php",
                 "html", "astro"
             }
-        }), null_ls.builtins.diagnostics.eslint_d.with({
+        }), require("none-ls.diagnostics.eslint").with({
             filetypes = {
                 "javascript", "javascriptreact", "typescript", "typescriptreact"
             }
-            -- }), null_ls.builtins.formatting.deno_fmt.with({
-            --     filetypes = {
-            --         "javascript", "javascriptreact", "typescript", "typescriptreact"
-            --     }
-        }), null_ls.builtins.formatting.goimports,
-        null_ls.builtins.formatting.dart_format,
-        null_ls.builtins.formatting.gofmt,
-        null_ls.builtins.formatting.lua_format,
-        -- null_ls.builtins.formatting.yamlfmt,
-        null_ls.builtins.diagnostics.golangci_lint,
-        null_ls.builtins.diagnostics.luacheck,
-        null_ls.builtins.diagnostics.staticcheck,
-        null_ls.builtins.diagnostics.php
+        }), 
+		-- Deleted rustfmt 
+		-- Make sure the proper configurations from here
+		-- https://github.com/nvimtools/none-ls.nvim/issues/58
+        -- null_ls.builtins.formatting.rustfmt.with({filetypes = {"rust"}}),
+		null_ls.builtins.formatting.goimports,
+		null_ls.builtins.formatting.dart_format,
+		null_ls.builtins.formatting.gofmt,
+		null_ls.builtins.formatting.lua_format,
+		null_ls.builtins.formatting.yamlfmt,
+		null_ls.builtins.formatting.golangci_lint,
+		null_ls.builtins.formatting.luacheck,
+		null_ls.builtins.formatting.staticcheck,
+		null_ls.builtins.formatting.php,
     }
     -- if you want to set up formatting on save, you can use this as a callback
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
