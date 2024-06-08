@@ -2,7 +2,6 @@
 --- https://github.com/ray-x/go.nvim
 return {
     "ray-x/go.nvim",
-    commit = "db45cc91cf1bedb5fe5640cf71c452d43a87595a",
     dependencies = { -- optional packages
         "ray-x/guihua.lua", "neovim/nvim-lspconfig",
         "nvim-treesitter/nvim-treesitter", "mfussenegger/nvim-dap",
