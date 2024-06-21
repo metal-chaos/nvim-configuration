@@ -23,6 +23,7 @@ function M.config()
         null_ls.builtins.formatting.dart_format,
         null_ls.builtins.formatting.gofmt,
         -- null_ls.builtins.formatting.yamlfmt,
+        null_ls.builtins.diagnostics.phpmd.with({ filetypes = { "php" } }),
     }
     -- if you want to set up formatting on save, you can use this as a callback
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

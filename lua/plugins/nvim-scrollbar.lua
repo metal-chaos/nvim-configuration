@@ -1,8 +1,7 @@
 return {
     "petertriho/nvim-scrollbar",
-    dependencies = "kevinhwang91/nvim-hlslens",
+    -- dependencies = "kevinhwang91/nvim-hlslens",
     config = function()
-        require("scrollbar").setup({handle = {color = "#2fe0c5"}})
-        require("scrollbar.handlers.search").setup()
-    end
+        require("scrollbar").setup({ handle = { color = "#2fe0c5" } })
+    end,
 }
